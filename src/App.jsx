@@ -70,15 +70,15 @@ function App() {
         </div>
         <div className="inspiration-grid">
           <article className="inspiration-card">
-            <a href="https://www.lencoarmor.com/vehicle/firecat/" target="_blank" rel="noreferrer" className="inspiration-image">
+            <div className="inspiration-image">
               <img src="https://www.lencoarmor.com/wp-content/uploads/2024/01/firecat.png" alt="Lenco FireCat firefighting vehicle" loading="lazy" />
               <span>FIRE RESPONSE</span>
-            </a>
+            </div>
             <div className="inspiration-copy">
               <div className="inspiration-meta">REFERENCE 01 / FIRECAT</div>
               <h3>Firefighting capability</h3>
               <p>The FireCat is a firefighting vehicle concept with an onboard water system. It inspired the fire-response side of this project.</p>
-              <a className="inspiration-link" href="https://www.lencoarmor.com/vehicle/firecat/" target="_blank" rel="noreferrer">VIEW OFFICIAL FIRECAT <span>↗</span></a>
+              <span className="inspiration-credit">PHOTO: LENCO ARMORED VEHICLES</span>
             </div>
           </article>
           <article className="inspiration-card">
