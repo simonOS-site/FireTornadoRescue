@@ -55,7 +55,7 @@ function App() {
         <div className="hero-copy">
           <div className="eyebrow"><span /> BUILT FOR THE UNTHINKABLE</div>
           <h1>INTO THE<br /><em>STORM.</em><br />TOWARDS<br />SAFETY.</h1>
-          <p className="hero-lede">The FTR Tempest is a next-generation rescue vehicle concept designed for extreme fire environments, including fire tornadoes.</p>
+          <p className="hero-lede">The FTR Tempest is the next generation of technology. It is designed to fight fires in the most dire of places, including fire tornadoes. Its water jet is designed to withstand over 50 kg of force, and its body is designed to drive through extreme tornado conditions.</p>
           <div className="hero-actions">
             <button className="primary-button" onClick={() => goTo('vehicle')}>DISCOVER THE VEHICLE <span>↗</span></button>
             <button className="text-button" onClick={() => goTo('mission')}>EXPLORE THE MISSION <span>↓</span></button>
