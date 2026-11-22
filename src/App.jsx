@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 const features = [
-  { number: '01', title: 'Reinforced body', text: 'A protective outer structure designed around the vehicle concept and the harsh conditions it is intended to face.' },
-  { number: '02', title: 'Fire response equipment', text: 'Firefighting equipment and hose systems designed to support emergency crews.' },
+  { number: '01', title: 'Reinforced body', text: 'A reinforced body concept intended to protect the vehicle in extreme fire and tornado conditions.' },
+  { number: '02', title: 'Fire response equipment', text: 'A high-pressure water jet concept designed around a target force of more than 50 kg.' },
   { number: '03', title: 'Water supply', text: 'An integrated water storage concept to support firefighting operations when access is limited.' },
   { number: '04', title: 'Emergency visibility', text: 'Warning lights and clear visual signals help identify the rescue vehicle in difficult conditions.' },
 ];
@@ -55,7 +55,7 @@ function App() {
         <div className="hero-copy">
           <div className="eyebrow"><span /> BUILT FOR THE UNTHINKABLE</div>
           <h1>INTO THE<br /><em>STORM.</em><br />TOWARDS<br />SAFETY.</h1>
-          <p className="hero-lede">A rescue vehicle concept combining the storm-chasing spirit of a StormChaser with the firefighting purpose of an armoured FireCat.</p>
+          <p className="hero-lede">The FTR Tempest is a next-generation rescue vehicle concept designed for extreme fire environments, including fire tornadoes.</p>
           <div className="hero-actions">
             <button className="primary-button" onClick={() => goTo('vehicle')}>DISCOVER THE VEHICLE <span>↗</span></button>
             <button className="text-button" onClick={() => goTo('mission')}>EXPLORE THE MISSION <span>↓</span></button>
@@ -68,7 +68,7 @@ function App() {
           <div className="art-label"><span>FIELD CONCEPT</span><b>FTR Tempest</b></div>
           <div className="vehicle-placeholder model-render">
             <div className="placeholder-top">FTR Tempest / VEHICLE CONCEPT</div>
-            <img src="/model.svg" alt="FTR Tempest vehicle concept model" />
+            <img src="/tempest-render.svg" alt="FTR Tempest vehicle concept model" />
             <div className="placeholder-bottom">THE FTR Tempest / ORIGINAL STUDENT CONCEPT</div>
           </div>
           <div className="vertical-caption">ENGINEERED FOR RESCUE · DESIGNED FOR EXTREME CONDITIONS</div>
@@ -83,7 +83,7 @@ function App() {
         <div className="section-kicker">01 / THE VEHICLE</div>
         <div className="intro-grid">
           <div><h2>ONE VEHICLE.<br /><em>ONE PURPOSE.</em></h2></div>
-          <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>The FTR Tempest is a concept for an emergency response vehicle designed around a simple idea: bring protection, firefighting capability and rescue support together in one platform.</p><div className="spec-line"><span>VEHICLE NAME</span><b>FTR Tempest</b></div><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
+          <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>Designed for the most demanding environments, the FTR Tempest concept combines a reinforced body with dedicated firefighting equipment. Its water jet is designed around a target force of more than 50 kg, while its body concept aims to withstand extreme tornado conditions. These are design goals for a student concept, not tested performance claims.</p><div className="spec-line"><span>VEHICLE NAME</span><b>FTR Tempest</b></div><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
         </div>
       </section>
       )}
