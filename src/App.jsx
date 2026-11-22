@@ -9,7 +9,14 @@ const features = [
 
 function App() {
   const [active, setActive] = useState('overview');
-  const [missionStarted, setMissionStarted] = useState(false);
+  const [missionStep, setMissionStep] = useState(-1);
+  const missionStages = [
+    { label: 'ALERT RECEIVED', title: 'A warning is issued.', detail: 'A severe fire-weather warning is shared with the response team. The concept vehicle is placed on standby.', status: 'RESPONSE STANDBY' },
+    { label: 'TEAMS COORDINATED', title: 'The response is organised.', detail: 'Emergency services coordinate their roles and confirm that the area is being managed by the appropriate authorities.', status: 'TEAMS COORDINATED' },
+    { label: 'RESCUE SUPPORT', title: 'Support reaches the scene.', detail: 'The Fire Tornado Rescue concept represents a protected platform for supporting crews and helping people reach safety.', status: 'RESCUE SUPPORT' },
+    { label: 'SCENARIO COMPLETE', title: 'People are accounted for.', detail: 'The fictional scenario concludes with people moved to safety and response teams continuing their work.', status: 'SCENARIO COMPLETE' },
+  ];
+  const currentStage = missionStages[missionStep];
 
   const goTo = (id) => {
     setActive(id);
@@ -106,10 +113,23 @@ function App() {
       <section className="mission section" id="mission">
         <div className="section-kicker">03 / THE MISSION</div>
         <div className="mission-panel">
-          <div className="mission-copy"><div className="eyebrow"><span /> SIMULATED RESPONSE</div><h2>WHEN THE<br /><em>WARNING</em><br />SOUNDS.</h2><p>Explore a fictional response scenario and see how the vehicle concept fits into a coordinated rescue effort.</p><button className="primary-button" onClick={() => setMissionStarted(!missionStarted)}>{missionStarted ? 'RESET SCENARIO' : 'START SCENARIO'} <span>↗</span></button></div>
-          <div className="mission-status"><div className="radar"><div className="radar-ring ring-a" /><div className="radar-ring ring-b" /><div className="radar-sweep" /><span className="radar-point point-a" /><span className="radar-point point-b" /></div><div className="status-card"><span>SCENARIO STATUS</span><b className={missionStarted ? 'status-active' : ''}>{missionStarted ? 'SIMULATION ACTIVE' : 'STANDING BY'}</b><small>{missionStarted ? 'Concept response sequence initiated.' : 'Awaiting mission start.'}</small></div></div>
+          <div className="mission-copy">
+            <div className="eyebrow"><span /> SIMULATED RESPONSE</div>
+            <h2>WHEN THE<br /><em>WARNING</em><br />SOUNDS.</h2>
+            <p>A short, fictional scenario showing how the Fire Tornado Rescue concept could fit into a coordinated emergency response.</p>
+            <div className="mission-actions">
+              {missionStep < 0 ? <button className="primary-button" onClick={() => setMissionStep(0)}>BEGIN SIMULATION <span>↗</span></button> : missionStep < missionStages.length - 1 ? <button className="primary-button" onClick={() => setMissionStep((step) => Math.min(step + 1, missionStages.length - 1))}>NEXT STAGE <span>→</span></button> : <button className="primary-button" onClick={() => setMissionStep(-1)}>RUN AGAIN <span>↻</span></button>}
+              {missionStep >= 0 && <button className="text-button" onClick={() => setMissionStep(-1)}>RESET SCENARIO</button>}
+            </div>
+          </div>
+          <div className="mission-status">
+            <div className="scenario-progress"><div className="scenario-progress-top"><span>RESPONSE TIMELINE</span><b>{missionStep < 0 ? 'READY' : String(missionStep + 1).padStart(2, '0') + ' / 04'}</b></div>
+              <div className="scenario-track">{missionStages.map((stage, index) => <span key={stage.label} className={index <= missionStep ? 'complete' : ''} />)}</div>
+              {missionStep < 0 ? <div className="scenario-empty"><span className="scenario-symbol">＋</span><h3>Standing by.</h3><p>Start the simulation to follow the four stages of this fictional response.</p></div> : <div className="scenario-detail"><span className="scenario-label">{currentStage.label}</span><h3>{currentStage.title}</h3><p>{currentStage.detail}</p></div>}
+            </div>
+          </div>
         </div>
-        <p className="disclaimer">This is a student design concept. It is not a real emergency vehicle or operational guidance.</p>
+        <p className="disclaimer">Fictional demonstration only. This student design concept is not a real emergency service or operational guidance.</p>
       </section>
 
       <footer><a className="brand" href="#overview"><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a><span>STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
