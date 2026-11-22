@@ -22,7 +22,7 @@ function App() {
       <header className="nav">
         <a className="brand" href="#overview" onClick={() => setActive('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
         <nav aria-label="Main navigation">
-          {['overview', 'vehicle', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
+          {['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
         </nav>
         <button className="nav-cta" onClick={() => goTo('vehicle')}>EXPLORE VEHICLE <span>↗</span></button>
       </header>
@@ -42,10 +42,10 @@ function App() {
           <div className="art-grid" />
           <div className="fire-glow" />
           <div className="art-label"><span>FIELD CONCEPT</span><b>FTR / 001</b></div>
-          <div className="vehicle-placeholder">
-            <div className="placeholder-top">VEHICLE RENDER</div>
-            <div className="vehicle-silhouette"><div className="silhouette-window" /><div className="silhouette-front" /><div className="wheel wheel-one" /><div className="wheel wheel-two" /></div>
-            <div className="placeholder-bottom">MODEL IMAGE TO BE ADDED</div>
+          <div className="vehicle-placeholder model-render">
+            <div className="placeholder-top">YOUR VEHICLE / 3D MODEL</div>
+            <img src="/model.svg" alt="Fire Tornado Rescue vehicle concept model" />
+            <div className="placeholder-bottom">FTR / ORIGINAL STUDENT CONCEPT</div>
           </div>
           <div className="vertical-caption">ENGINEERED FOR RESCUE · DESIGNED FOR EXTREME CONDITIONS</div>
           <div className="art-index">FTR<span>001</span></div>
@@ -59,6 +59,42 @@ function App() {
           <div><h2>ONE VEHICLE.<br /><em>ONE PURPOSE.</em></h2></div>
           <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>Fire Tornado Rescue is a concept for an emergency response vehicle designed around a simple idea: bring protection, firefighting capability and rescue support together in one platform.</p><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
         </div>
+      </section>
+
+
+      <section className="inspiration section" id="inspiration">
+        <div className="section-kicker">02 / DESIGN INSPIRATION</div>
+        <div className="inspiration-heading">
+          <h2>IDEAS THAT<br /><em>INSPIRED IT.</em></h2>
+          <p>Firefighting and severe-weather research vehicles helped shape the direction of this concept. These are references, not vehicles built for the same mission.</p>
+        </div>
+        <div className="inspiration-grid">
+          <article className="inspiration-card">
+            <a href="https://www.lencoarmor.com/vehicle/firecat/" target="_blank" rel="noreferrer" className="inspiration-image">
+              <img src="https://www.lencoarmor.com/wp-content/uploads/2024/01/firecat.png" alt="Lenco FireCat firefighting vehicle" loading="lazy" />
+              <span>FIRE RESPONSE</span>
+            </a>
+            <div className="inspiration-copy">
+              <div className="inspiration-meta">REFERENCE 01 / FIRECAT</div>
+              <h3>Firefighting capability</h3>
+              <p>The FireCat is a firefighting vehicle concept with an onboard water system. It inspired the fire-response side of this project.</p>
+              <a className="inspiration-link" href="https://www.lencoarmor.com/vehicle/firecat/" target="_blank" rel="noreferrer">VIEW OFFICIAL FIRECAT <span>↗</span></a>
+            </div>
+          </article>
+          <article className="inspiration-card">
+            <a href="https://commons.wikimedia.org/wiki/File:NOAA_NSSL_far_field_vehicle.jpg" target="_blank" rel="noreferrer" className="inspiration-image">
+              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/NOAA_NSSL_far_field_vehicle.jpg?width=1200" alt="NOAA NSSL mobile weather research vehicle" loading="lazy" />
+              <span>WEATHER RESEARCH</span>
+            </a>
+            <div className="inspiration-copy">
+              <div className="inspiration-meta">REFERENCE 02 / STORM RESEARCH</div>
+              <h3>Storm-observation vehicles</h3>
+              <p>NOAA research vehicles collect weather observations around storms. This inspired the weather-awareness side of the concept.</p>
+              <a className="inspiration-link" href="https://commons.wikimedia.org/wiki/File:NOAA_NSSL_far_field_vehicle.jpg" target="_blank" rel="noreferrer">VIEW PHOTO &amp; CREDIT <span>↗</span></a>
+            </div>
+          </article>
+        </div>
+        <p className="inspiration-note">Reference images belong to their respective owners. The Fire Tornado Rescue design is an original student concept.</p>
       </section>
 
       <section className="capabilities section" id="capabilities">
