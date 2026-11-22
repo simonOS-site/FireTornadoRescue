@@ -107,3 +107,20 @@ footer{font-size:9px}
 .scenario-empty p,.scenario-detail p{max-width:430px;color:#b4bbb6;font-size:13px;line-height:1.8;margin:0}
 .scenario-label{display:inline-block;color:#ed6a48;font-size:9px;font-weight:800;letter-spacing:1.5px;margin-bottom:14px}
 @media(max-width:760px){.mission-panel{grid-template-columns:1fr;gap:26px;margin-top:30px;padding:22px}.mission-status{min-height:250px}.scenario-progress{min-height:250px;padding:21px}.mission-copy h2{font-size:clamp(40px,10vw,55px)}}
+
+/* FTR TITAN multi-page navigation and persistent header */
+.topline{position:sticky;top:0;z-index:120;background:#0b0d0e}
+.site-nav{position:sticky;top:34px;z-index:110;min-height:78px;padding:0 6.2%;display:flex;align-items:center;justify-content:space-between;gap:22px;border-bottom:1px solid #292d2e;background:rgba(17,19,20,.97);backdrop-filter:blur(14px)}
+.site-nav nav{display:flex;align-items:center;gap:clamp(10px,2vw,26px)}
+.site-nav .nav-link{white-space:nowrap}
+.site-nav .brand{flex-shrink:0}
+.site-nav .nav-cta{white-space:nowrap;flex-shrink:0}
+.hero,.intro,.inspiration,.capabilities,.mission{min-height:calc(100vh - 112px)}
+@media(max-width:760px){
+ .site-nav{top:34px;min-height:auto;padding:12px 5%;flex-wrap:wrap;gap:10px}
+ .site-nav nav{order:3;width:100%;overflow-x:auto;gap:18px;padding:2px 0 5px;scrollbar-width:thin}
+ .site-nav .nav-link{font-size:9px}
+ .site-nav .nav-cta{padding:10px 12px;font-size:9px}
+ .site-nav .brand{font-size:15px}
+ .hero,.intro,.inspiration,.capabilities,.mission{min-height:calc(100vh - 150px)}
+}
