@@ -124,3 +124,29 @@ footer{font-size:9px}
  .site-nav .brand{font-size:15px}
  .hero,.intro,.inspiration,.capabilities,.mission{min-height:calc(100vh - 150px)}
 }
+
+/* FTR Tempest visual refinement */
+h1,h2,h3,.brand,.large-copy,.inspiration-copy h3,.feature h3,.mission-copy h2{
+  font-family:Roboto,Arial,sans-serif;
+  letter-spacing:-.015em;
+  line-height:1.12;
+  font-weight:750;
+}
+h1{line-height:1.04;letter-spacing:-.025em}
+h2{line-height:1.08;letter-spacing:-.02em}
+.inspiration-image{height:165px}
+.inspiration-image img{object-fit:contain;padding:8px;background:#202425}
+.model-render{max-width:540px;padding:12px}
+.model-render img{height:230px;max-height:230px;object-fit:contain;padding:12px}
+.hero-art{max-width:600px}
+.hero-lede,.intro-text p:not(.large-copy),.inspiration-heading p,.inspiration-copy p,.feature p,.mission-copy>p,.scenario-empty p,.scenario-detail p{
+  letter-spacing:.01em;
+  line-height:1.85;
+}
+@media(max-width:760px){
+  .inspiration-image{height:145px}
+  .model-render{max-width:100%;padding:9px}
+  .model-render img{height:185px;max-height:185px}
+  h1{letter-spacing:-.02em;line-height:1.06}
+  h2{letter-spacing:-.01em;line-height:1.1}
+}
