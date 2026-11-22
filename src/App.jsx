@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const features = [
   { number: '01', title: 'Reinforced body', text: 'A protective outer structure designed around the vehicle concept and the harsh conditions it is intended to face.' },
