@@ -23,3 +23,65 @@
 .inspiration-link{display:inline-flex;gap:13px;align-items:center;border-bottom:1px solid #c7472c;padding-bottom:8px;color:#c7472c;font-size:9px;font-weight:800;letter-spacing:1px}
 .inspiration-note{margin:22px 0 0;color:#777c78;font-size:10px;line-height:1.6}
 @media(max-width:620px){.inspiration-heading{align-items:flex-start;flex-direction:column}.inspiration-grid{grid-template-columns:1fr;gap:15px;margin-top:32px}.inspiration-image{height:230px}.inspiration-copy p{min-height:0}.model-render{padding:10px}}
+
+/* Refinements: more breathing room, calmer typography and smaller reference photos */
+:root{font-family:Roboto,Arial,sans-serif}
+h1,h2,h3,.brand,.large-copy,.inspiration-copy h3{font-family:Roboto,Arial,sans-serif;letter-spacing:-.035em}
+h1,h2{line-height:1.02;font-weight:850;letter-spacing:-.045em}
+h1{font-size:clamp(58px,6.7vw,92px);line-height:.99}
+h2{font-size:clamp(42px,5vw,66px)}
+.brand{font-size:18px;letter-spacing:-.025em}
+.topline,.section-kicker,.eyebrow,.nav-link,.nav-cta,.placeholder-top,.placeholder-bottom,.inspiration-meta,.inspiration-link,.inspiration-credit{letter-spacing:.9px}
+.nav{gap:26px}
+.nav-link{background:transparent;border:0;color:#c6c8c5;text-transform:uppercase;font-size:10px;font-weight:700;padding:12px 0;cursor:pointer}
+.nav-link:hover,.nav-link.selected{color:var(--orange)}
+.hero{grid-template-columns:minmax(0, .88fr) minmax(0, 1.12fr);gap:28px;min-height:650px;padding-top:66px}
+.hero-copy{max-width:540px}
+.hero-lede{font-size:15px;line-height:1.75;max-width:430px}
+.hero-art{width:100%;max-width:650px;justify-self:end}
+.model-render{width:100%;max-width:600px;padding:14px;margin:0 auto;background:linear-gradient(145deg,#242829,#171a1b);box-shadow:0 18px 42px #0006}
+.model-render img{width:100%;height:330px;max-height:none;object-fit:contain;padding:8px;background:radial-gradient(ellipse at center,#3b4041 0,transparent 72%)}
+.model-render .placeholder-top,.model-render .placeholder-bottom{font-size:9px}
+.vertical-caption{font-size:8px;letter-spacing:1px}
+.art-index{font-size:10px}
+.intro,.inspiration,.capabilities,.mission{padding:86px 8%}
+.intro-grid{gap:7%;margin-top:34px}
+.intro-text p:not(.large-copy){font-size:14px;line-height:1.85}
+.large-copy{font-size:27px;line-height:1.2}
+.inspiration-heading h2,.cap-heading h2{font-size:clamp(42px,5vw,66px);line-height:1.02}
+.inspiration-heading p,.cap-heading p{font-size:14px;line-height:1.75}
+.inspiration-grid{gap:18px;margin-top:36px}
+.inspiration-image{height:205px}
+.inspiration-copy{padding:20px}
+.inspiration-copy h3{font-size:24px;line-height:1.15}
+.inspiration-copy p{font-size:13px;line-height:1.7;min-height:0}
+.inspiration-note{font-size:11px}
+.feature-grid{gap:12px;margin-top:42px}
+.feature{padding:23px 20px;min-height:210px}
+.feature h3{font-size:22px;line-height:1.15}
+.feature p{font-size:13px;line-height:1.7}
+.mission-copy p{font-size:14px;line-height:1.8}
+.disclaimer{font-size:11px}
+footer{font-size:9px}
+@media(max-width:900px){
+ .hero{grid-template-columns:1fr;gap:12px;padding-top:55px}
+ .hero-copy{max-width:650px}
+ .hero-art{justify-self:center;max-width:680px}
+ .model-render img{height:300px}
+ .intro,.inspiration,.capabilities,.mission{padding:72px 7%}
+}
+@media(max-width:620px){
+ h1{font-size:clamp(54px,13vw,76px)}
+ h2{font-size:clamp(38px,10vw,52px)}
+ .hero{padding:48px 6% 70px;gap:20px}
+ .hero-art{margin-top:0}
+ .model-render{padding:10px}
+ .model-render img{height:235px}
+ .intro,.inspiration,.capabilities,.mission{padding:62px 7%}
+ .inspiration-image{height:180px}
+ .inspiration-copy{padding:17px}
+ .nav{gap:7px;flex-wrap:wrap}
+ .nav-link{font-size:9px;padding:8px 3px}
+ .nav-cta{font-size:9px;padding:10px}
+ .brand{font-size:16px}
+}
