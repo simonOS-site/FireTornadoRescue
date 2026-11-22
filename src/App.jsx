@@ -68,7 +68,7 @@ function App() {
           <div className="art-label"><span>FIELD CONCEPT</span><b>FTR Tempest</b></div>
           <div className="vehicle-placeholder model-render">
             <div className="placeholder-top">FTR Tempest / VEHICLE CONCEPT</div>
-            <img src="/tempest-render.svg" alt="FTR Tempest vehicle concept model" />
+            <img src="/model.svg" alt="FTR Tempest vehicle concept model" />
             <div className="placeholder-bottom">THE FTR Tempest / ORIGINAL STUDENT CONCEPT</div>
           </div>
           <div className="vertical-caption">ENGINEERED FOR RESCUE · DESIGNED FOR EXTREME CONDITIONS</div>
