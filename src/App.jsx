@@ -43,13 +43,14 @@ function App() {
     <main>
       <div className="topline"><span className="live-dot" /> FTR TITAN <span className="topline-right">FIRE &amp; RESCUE / CONCEPT VEHICLE</span></div>
       <header className="site-nav">
-        <a className="brand" href="#overview" onClick={() => setActive('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
+        <a className="brand" href="#overview" onClick={() => goTo('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
         <nav aria-label="Main navigation">
           {['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
         </nav>
         <button className="nav-cta" onClick={() => goTo('vehicle')}>EXPLORE VEHICLE <span>↗</span></button>
       </header>
 
+      {active === 'overview' && (
       <section className="hero" id="overview">
         <div className="hero-copy">
           <div className="eyebrow"><span /> BUILT FOR THE UNTHINKABLE</div>
@@ -66,8 +67,8 @@ function App() {
           <div className="fire-glow" />
           <div className="art-label"><span>FIELD CONCEPT</span><b>FTR TITAN</b></div>
           <div className="vehicle-placeholder model-render">
-            <div className="placeholder-top">FTR-01 TITAN / VEHICLE CONCEPT</div>
-            <img src="/model.svg" alt="FTR-01 TITAN vehicle concept model" />
+            <div className="placeholder-top">FTR TITAN / VEHICLE CONCEPT</div>
+            <img src="/model.svg" alt="FTR TITAN vehicle concept model" />
             <div className="placeholder-bottom">THE FTR TITAN / ORIGINAL STUDENT CONCEPT</div>
           </div>
           <div className="vertical-caption">ENGINEERED FOR RESCUE · DESIGNED FOR EXTREME CONDITIONS</div>
@@ -75,16 +76,20 @@ function App() {
         </div>
         <div className="hero-bottom"><span>DESIGN / ENGINEERING / RESCUE</span><span>SCROLL TO EXPLORE ↓</span></div>
       </section>
+      )}
 
+      {active === 'vehicle' && (
       <section className="intro section" id="vehicle">
         <div className="section-kicker">01 / THE VEHICLE</div>
         <div className="intro-grid">
           <div><h2>ONE VEHICLE.<br /><em>ONE PURPOSE.</em></h2></div>
-          <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>The FTR TITAN is a concept for an emergency response vehicle designed around a simple idea: bring protection, firefighting capability and rescue support together in one platform.</p><div className="spec-line"><span>VEHICLE NAME</span><b>FTR-01 TITAN</b></div><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
+          <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>The FTR TITAN is a concept for an emergency response vehicle designed around a simple idea: bring protection, firefighting capability and rescue support together in one platform.</p><div className="spec-line"><span>VEHICLE NAME</span><b>FTR TITAN</b></div><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
         </div>
       </section>
+      )}
 
 
+      {active === 'inspiration' && (
       <section className="inspiration section" id="inspiration">
         <div className="section-kicker">02 / DESIGN INSPIRATION</div>
         <div className="inspiration-heading">
@@ -119,13 +124,17 @@ function App() {
         </div>
         <p className="inspiration-note">Reference images belong to their respective owners. The FTR TITAN design is an original student concept.</p>
       </section>
+      )}
 
+      {active === 'capabilities' && (
       <section className="capabilities section" id="capabilities">
         <div className="section-kicker">02 / CAPABILITIES</div>
         <div className="cap-heading"><h2>DESIGNED TO<br /><em>RESPOND.</em></h2><p>Every feature has a job. Explore the key ideas behind the FTR TITAN concept.</p></div>
         <div className="feature-grid">{features.map((feature) => <article className="feature" key={feature.number}><span className="feature-number">{feature.number}</span><div className="feature-icon">{feature.number === '01' ? '⬡' : feature.number === '02' ? '✳' : feature.number === '03' ? '◉' : '⌁'}</div><h3>{feature.title}</h3><p>{feature.text}</p><span className="feature-arrow">↗</span></article>)}</div>
       </section>
+      )}
 
+      {active === 'mission' && (
       <section className="mission section" id="mission">
         <div className="section-kicker">03 / THE MISSION</div>
         <div className="mission-panel">
@@ -147,6 +156,7 @@ function App() {
         </div>
         <p className="disclaimer">Fictional demonstration only. This student design concept is not a real emergency service or operational guidance.</p>
       </section>
+      )}
 
       <footer><a className="brand" href="#overview"><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a><span>STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
     </main>
