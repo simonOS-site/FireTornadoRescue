@@ -17,7 +17,7 @@ function App() {
   const missionStages = [
     { label: 'ALERT RECEIVED', title: 'A warning is issued.', detail: 'A severe fire-weather warning is shared with the response team. The concept vehicle is placed on standby.', status: 'RESPONSE STANDBY' },
     { label: 'TEAMS COORDINATED', title: 'The response is organised.', detail: 'Emergency services coordinate their roles and confirm that the area is being managed by the appropriate authorities.', status: 'TEAMS COORDINATED' },
-    { label: 'RESCUE SUPPORT', title: 'Support reaches the scene.', detail: 'The FTR TITAN concept represents a protected platform for supporting crews and helping people reach safety.', status: 'RESCUE SUPPORT' },
+    { label: 'RESCUE SUPPORT', title: 'Support reaches the scene.', detail: 'The FTR Tempest concept represents a protected platform for supporting crews and helping people reach safety.', status: 'RESCUE SUPPORT' },
     { label: 'SCENARIO COMPLETE', title: 'People are accounted for.', detail: 'The fictional scenario concludes with people moved to safety and response teams continuing their work.', status: 'SCENARIO COMPLETE' },
   ];
   const currentStage = missionStages[missionStep];
@@ -41,7 +41,7 @@ function App() {
 
   return (
     <main>
-      <div className="topline"><span className="live-dot" /> FTR TITAN <span className="topline-right">FIRE &amp; RESCUE / CONCEPT VEHICLE</span></div>
+      <div className="topline"><span className="live-dot" /> FTR Tempest <span className="topline-right">FIRE &amp; RESCUE / CONCEPT VEHICLE</span></div>
       <header className="site-nav">
         <a className="brand" href="#overview" onClick={() => goTo('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
         <nav aria-label="Main navigation">
@@ -60,16 +60,16 @@ function App() {
             <button className="primary-button" onClick={() => goTo('vehicle')}>DISCOVER THE VEHICLE <span>↗</span></button>
             <button className="text-button" onClick={() => goTo('mission')}>EXPLORE THE MISSION <span>↓</span></button>
           </div>
-          <div className="hero-meta"><span>01 / 04</span><span>THE FTR TITAN / VEHICLE CONCEPT</span></div>
+          <div className="hero-meta"><span>01 / 04</span><span>THE FTR Tempest / VEHICLE CONCEPT</span></div>
         </div>
         <div className="hero-art" aria-label="Fire and smoke atmosphere">
           <div className="art-grid" />
           <div className="fire-glow" />
-          <div className="art-label"><span>FIELD CONCEPT</span><b>FTR TITAN</b></div>
+          <div className="art-label"><span>FIELD CONCEPT</span><b>FTR Tempest</b></div>
           <div className="vehicle-placeholder model-render">
-            <div className="placeholder-top">FTR TITAN / VEHICLE CONCEPT</div>
-            <img src="/model.svg" alt="FTR TITAN vehicle concept model" />
-            <div className="placeholder-bottom">THE FTR TITAN / ORIGINAL STUDENT CONCEPT</div>
+            <div className="placeholder-top">FTR Tempest / VEHICLE CONCEPT</div>
+            <img src="/model.svg" alt="FTR Tempest vehicle concept model" />
+            <div className="placeholder-bottom">THE FTR Tempest / ORIGINAL STUDENT CONCEPT</div>
           </div>
           <div className="vertical-caption">ENGINEERED FOR RESCUE · DESIGNED FOR EXTREME CONDITIONS</div>
           <div className="art-index">FTR<span>001</span></div>
@@ -83,7 +83,7 @@ function App() {
         <div className="section-kicker">01 / THE VEHICLE</div>
         <div className="intro-grid">
           <div><h2>ONE VEHICLE.<br /><em>ONE PURPOSE.</em></h2></div>
-          <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>The FTR TITAN is a concept for an emergency response vehicle designed around a simple idea: bring protection, firefighting capability and rescue support together in one platform.</p><div className="spec-line"><span>VEHICLE NAME</span><b>FTR TITAN</b></div><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
+          <div className="intro-text"><p className="large-copy">Get people to safety when conditions become dangerous.</p><p>The FTR Tempest is a concept for an emergency response vehicle designed around a simple idea: bring protection, firefighting capability and rescue support together in one platform.</p><div className="spec-line"><span>VEHICLE NAME</span><b>FTR Tempest</b></div><div className="spec-line"><span>VEHICLE TYPE</span><b>ARMOURED FIRE RESCUE CONCEPT</b></div><div className="spec-line"><span>DESIGN INSPIRATION</span><b>STORMCHASER × FIRECAT</b></div></div>
         </div>
       </section>
       )}
@@ -122,14 +122,14 @@ function App() {
             </div>
           </article>
         </div>
-        <p className="inspiration-note">Reference images belong to their respective owners. The FTR TITAN design is an original student concept.</p>
+        <p className="inspiration-note">Reference images belong to their respective owners. The FTR Tempest design is an original student concept.</p>
       </section>
       )}
 
       {active === 'capabilities' && (
       <section className="capabilities section" id="capabilities">
         <div className="section-kicker">02 / CAPABILITIES</div>
-        <div className="cap-heading"><h2>DESIGNED TO<br /><em>RESPOND.</em></h2><p>Every feature has a job. Explore the key ideas behind the FTR TITAN concept.</p></div>
+        <div className="cap-heading"><h2>DESIGNED TO<br /><em>RESPOND.</em></h2><p>Every feature has a job. Explore the key ideas behind the FTR Tempest concept.</p></div>
         <div className="feature-grid">{features.map((feature) => <article className="feature" key={feature.number}><span className="feature-number">{feature.number}</span><div className="feature-icon">{feature.number === '01' ? '⬡' : feature.number === '02' ? '✳' : feature.number === '03' ? '◉' : '⌁'}</div><h3>{feature.title}</h3><p>{feature.text}</p><span className="feature-arrow">↗</span></article>)}</div>
       </section>
       )}
@@ -141,7 +141,7 @@ function App() {
           <div className="mission-copy">
             <div className="eyebrow"><span /> SIMULATED RESPONSE</div>
             <h2>WHEN THE<br /><em>WARNING</em><br />SOUNDS.</h2>
-            <p>A short, fictional scenario showing how the FTR TITAN concept could fit into a coordinated emergency response.</p>
+            <p>A short, fictional scenario showing how the FTR Tempest concept could fit into a coordinated emergency response.</p>
             <div className="mission-actions">
               {missionStep < 0 ? <button className="primary-button" onClick={() => setMissionStep(0)}>BEGIN SIMULATION <span>↗</span></button> : missionStep < missionStages.length - 1 ? <button className="primary-button" onClick={() => setMissionStep((step) => Math.min(step + 1, missionStages.length - 1))}>NEXT STAGE <span>→</span></button> : <button className="primary-button" onClick={() => setMissionStep(-1)}>RUN AGAIN <span>↻</span></button>}
               {missionStep >= 0 && <button className="text-button" onClick={() => setMissionStep(-1)}>RESET SCENARIO</button>}
