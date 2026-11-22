@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const features = [
   { number: '01', title: 'Reinforced body', text: 'A protective outer structure designed around the vehicle concept and the harsh conditions it is intended to face.' },
@@ -8,7 +8,11 @@ const features = [
 ];
 
 function App() {
-  const [active, setActive] = useState('overview');
+  const validPages = ['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'];
+  const [active, setActive] = useState(() => {
+    const requested = new URLSearchParams(window.location.search).get('page');
+    return validPages.includes(requested) ? requested : 'overview';
+  });
   const [missionStep, setMissionStep] = useState(-1);
   const missionStages = [
     { label: 'ALERT RECEIVED', title: 'A warning is issued.', detail: 'A severe fire-weather warning is shared with the response team. The concept vehicle is placed on standby.', status: 'RESPONSE STANDBY' },
@@ -19,14 +23,26 @@ function App() {
   const currentStage = missionStages[missionStep];
 
   const goTo = (id) => {
+    if (!validPages.includes(id)) return;
     setActive(id);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    window.history.pushState({ page: id }, '', id === 'overview' ? window.location.pathname : `?page=${id}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    const handleBack = () => {
+      const requested = new URLSearchParams(window.location.search).get('page');
+      setActive(validPages.includes(requested) ? requested : 'overview');
+      window.scrollTo(0, 0);
+    };
+    window.addEventListener('popstate', handleBack);
+    return () => window.removeEventListener('popstate', handleBack);
+  }, []);
 
   return (
     <main>
-      <div className="topline"><span className="live-dot" /> FTR-01 TITAN <span className="topline-right">FIRE &amp; RESCUE / CONCEPT VEHICLE</span></div>
-      <header className="nav">
+      <div className="topline"><span className="live-dot" /> FTR TITAN <span className="topline-right">FIRE &amp; RESCUE / CONCEPT VEHICLE</span></div>
+      <header className="site-nav">
         <a className="brand" href="#overview" onClick={() => setActive('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
         <nav aria-label="Main navigation">
           {['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
@@ -48,7 +64,7 @@ function App() {
         <div className="hero-art" aria-label="Fire and smoke atmosphere">
           <div className="art-grid" />
           <div className="fire-glow" />
-          <div className="art-label"><span>FIELD CONCEPT</span><b>FTR-01 TITAN</b></div>
+          <div className="art-label"><span>FIELD CONCEPT</span><b>FTR TITAN</b></div>
           <div className="vehicle-placeholder model-render">
             <div className="placeholder-top">FTR-01 TITAN / VEHICLE CONCEPT</div>
             <img src="/model.svg" alt="FTR-01 TITAN vehicle concept model" />
