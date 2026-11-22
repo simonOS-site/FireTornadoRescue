@@ -85,3 +85,25 @@ footer{font-size:9px}
  .nav-cta{font-size:9px;padding:10px}
  .brand{font-size:16px}
 }
+
+/* Functional simulated response panel */
+.mission-panel{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,6vw,76px);align-items:stretch;margin-top:46px;padding:clamp(24px,4vw,48px);background:#f4f3ee;border:1px solid #cfcec7}
+.mission-copy{max-width:440px;display:flex;flex-direction:column;align-items:flex-start}
+.mission-copy h2{font-size:clamp(42px,5vw,65px);line-height:1.02;margin:24px 0 18px}
+.mission-copy>p{max-width:390px;color:#626763;font-size:14px;line-height:1.8}
+.mission-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:20px}
+.mission-actions .primary-button{margin:0}
+.mission-actions .text-button{color:#555b57}
+.mission-status{min-width:0;display:flex;align-items:stretch}
+.scenario-progress{width:100%;min-height:280px;padding:25px;background:#202526;color:#f1f0eb;display:flex;flex-direction:column;justify-content:flex-start}
+.scenario-progress-top{display:flex;align-items:center;justify-content:space-between;gap:15px;color:#b4bbb6;font-size:9px;font-weight:800;letter-spacing:1.4px}
+.scenario-progress-top b{color:#ed6a48}
+.scenario-track{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:19px 0 28px}
+.scenario-track span{height:4px;background:#4a5150;transition:background .2s}
+.scenario-track span.complete{background:#ed6a48}
+.scenario-empty,.scenario-detail{margin:auto 0}
+.scenario-symbol{display:grid;place-items:center;width:36px;height:36px;border:1px solid #626a67;color:#ed6a48;font-size:22px;margin-bottom:18px}
+.scenario-empty h3,.scenario-detail h3{font-size:clamp(24px,3vw,34px);line-height:1.15;margin:0 0 10px;letter-spacing:-.5px}
+.scenario-empty p,.scenario-detail p{max-width:430px;color:#b4bbb6;font-size:13px;line-height:1.8;margin:0}
+.scenario-label{display:inline-block;color:#ed6a48;font-size:9px;font-weight:800;letter-spacing:1.5px;margin-bottom:14px}
+@media(max-width:760px){.mission-panel{grid-template-columns:1fr;gap:26px;margin-top:30px;padding:22px}.mission-status{min-height:250px}.scenario-progress{min-height:250px;padding:21px}.mission-copy h2{font-size:clamp(40px,10vw,55px)}}
