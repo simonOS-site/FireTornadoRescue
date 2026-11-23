@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-const dispatchObjectives = [
-  {title:'COMMUNITY CHECK-IN',zone:'Ridge Community',brief:'A group of residents needs a welfare check and an update from the response team.',required:1,points:25},
-  {title:'RESTORE TEAM COORDINATION',zone:'Coordination Point',brief:'The response desk needs units at the coordination point to share the latest situation update.',required:2,points:25},
-  {title:'SUPPLY DROP',zone:'Supply Hub',brief:'A supply request has arrived. Assign a Tempest to the supply hub to complete the objective.',required:1,points:25},
-  {title:'SECTOR SUPPORT',zone:'Ember Sector',brief:'The final objective is to provide support at Ember Sector and complete the fictional incident.',required:2,points:25}
-];
+const createDispatchObjectives = () => {
+  const calls = [
+    {zone:'Ember Sector',title:'SECTOR SUPPORT',brief:'A request for additional support has arrived from Ember Sector.'},
+    {zone:'Ridge Community',title:'COMMUNITY CHECK-IN',brief:'A group of residents needs assistance and an update from the response team.'},
+    {zone:'Supply Hub',title:'SUPPLY REQUEST',brief:'The supply hub has requested additional support resources.'},
+    {zone:'Coordination Point',title:'TEAM COORDINATION',brief:'The coordination point needs units to share the latest situation update.'}
+  ];
+  const shuffled=[...calls].sort(()=>Math.random()-.5);
+  const count=Math.random()<0.5?2:3;
+  return shuffled.slice(0,count).map((call,index)=>({
+    ...call,required:1+Math.floor(Math.random()*3),points:Math.round(100/count/5)*5
+  }));
+};
 
 const features = [
   { number: '01', title: 'Reinforced body', text: 'A reinforced body concept intended to protect the vehicle in extreme fire and tornado conditions.' },
@@ -30,6 +37,7 @@ function App() {
   ]);
   const [dispatchRound, setDispatchRound] = useState(0);
   const [objectiveIndex, setObjectiveIndex] = useState(0);
+  const [dispatchObjectives, setDispatchObjectives] = useState(createDispatchObjectives);
   const [incidentComplete, setIncidentComplete] = useState(false);
   const [lastOutcome, setLastOutcome] = useState('No objectives completed yet.');
   const currentObjective = dispatchObjectives[objectiveIndex];
@@ -108,7 +116,7 @@ function App() {
     setTimeout(()=>setUnits(current=>current.map(unit=>unit.id===selectedUnit && unit.status==='RETURNING'?{...unit,status:'READY'}:unit)),2200);
   };
   const resetDispatch = () => {
-    setDispatchStarted(false);setSelectedUnit('T-01');setDispatchRound(0);setObjectiveIndex(0);setIncidentComplete(false);setLastOutcome('No objectives completed yet.');setRescueScore(0);
+    setDispatchStarted(false);setSelectedUnit('T-01');setDispatchRound(0);setObjectiveIndex(0);setDispatchObjectives(createDispatchObjectives());setIncidentComplete(false);setLastOutcome('No objectives completed yet.');setRescueScore(0);
     setUnits([{id:'T-01',name:'TEMPEST 01',zone:'Base',status:'STANDBY'},{id:'T-02',name:'TEMPEST 02',zone:'Base',status:'STANDBY'},{id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}]);
     setDispatchEvent('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
     setDispatchLog(['19:42 · Incident FT-204 created. Three Tempest units available.']);
@@ -272,6 +280,14 @@ function App() {
                 <p>{incidentComplete?'All four objectives have been reviewed. Your final support score is shown above.':currentObjective?.brief}</p>
                 <div className="objective-requirement">{incidentComplete?'FINAL SCORE':`REQUIRES ${currentObjective?.required} UNIT(S) AT DESTINATION`} <strong>{incidentComplete?`${rescueScore}%`:`+${currentObjective?.points} POINTS`}</strong></div>
               </div>
+              <section className="incident-queue">
+                <div className="dispatch-section-head"><span>INCOMING SUPPORT REQUESTS</span><small>{dispatchObjectives.length} LOCATIONS REPORTING</small></div>
+                <div className="incident-queue-list">{dispatchObjectives.map((objective,index)=><article className={'incident-queue-item '+(index===objectiveIndex&&!incidentComplete?'current':'')} key={objective.zone}>
+                  <div><b>{objective.zone.toUpperCase()}</b><small>{objective.title}</small></div>
+                  <strong>{objective.required} {objective.required===1?'UNIT':'UNITS'} REQUIRED</strong>
+                  <span>{index<objectiveIndex?'REVIEWED':index===objectiveIndex&&!incidentComplete?'ACTIVE':'AWAITING'}</span>
+                </article>)}</div>
+              </section>
               <div className="dispatch-map">
                 <div className="dispatch-map-grid"/><div className="dispatch-road road-a"/><div className="dispatch-road road-b"/><div className="dispatch-road road-c"/>
                 <div className="dispatch-map-title">NORTH RIDGE / LIVE UNIT TRACKING</div>
