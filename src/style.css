@@ -62,3 +62,30 @@ footer{padding:25px 6%;display:flex;align-items:center;justify-content:space-bet
 .site-nav .nav-link:hover,.site-nav .nav-link.selected{color:var(--orange);}
 .site-nav .nav-link.selected{border-bottom:2px solid var(--orange);}
 @media(max-width:700px){.site-nav{height:auto;min-height:unset;padding:14px 5%;display:flex;flex-wrap:wrap;gap:10px 18px;}.site-nav nav{order:2;width:100%;margin:0;justify-content:flex-start;overflow-x:auto;gap:22px;}.site-nav .nav-link{padding:9px 0;font-size:9px;}}
+
+
+/* Fixed navigation: always visible while the page scrolls */
+main{padding-top:72px}
+.site-nav{position:fixed!important;top:0!important;left:0;right:0;width:100%;height:72px!important;min-height:72px!important;z-index:2000!important;flex-wrap:nowrap!important}
+.site-nav nav{order:initial!important;width:auto!important;flex-wrap:nowrap;overflow-x:auto}
+.site-nav .nav-link{padding:24px 0!important}
+.reference-table-wrap{width:100%;overflow-x:auto;margin-top:36px;border:1px solid #c9c9c9;background:#f7f7f7}
+.reference-table{width:100%;border-collapse:collapse;text-align:left}
+.reference-table th,.reference-table td{padding:22px 24px;vertical-align:top;border-bottom:1px solid #d5d5d5;font-size:13px;line-height:1.75}
+.reference-table thead th{background:#191919;color:#f7f7f7;font-size:9px;letter-spacing:.12em;font-weight:900}
+.reference-table tbody th{width:29%;min-width:210px;background:#e7e7e7}
+.reference-table tbody td{width:35%;color:#444}
+.reference-table tbody tr:last-child th,.reference-table tbody tr:last-child td{border-bottom:0}
+.reference-table tbody th strong,.reference-table tbody th small,.reference-table tbody th a{display:block}
+.reference-number{display:block;color:#d96808;font-size:10px;font-weight:900;margin-bottom:8px}
+.reference-table tbody th strong{font-size:16px;line-height:1.35;color:#111}
+.reference-table tbody th small{font-size:8px;letter-spacing:.09em;color:#666;margin-top:7px}
+.reference-table tbody th a{font-size:9px;letter-spacing:.08em;font-weight:900;color:#d96808;margin-top:14px}
+@media(max-width:700px){
+  .site-nav{padding:0 5%!important;gap:16px!important}
+  .site-nav .brand{font-size:10px;gap:7px}
+  .site-nav .brand-mark{width:28px;height:28px;font-size:15px}
+  .site-nav nav{gap:16px!important;min-width:0}
+  .site-nav .nav-link{font-size:8px!important;padding:27px 0!important}
+  .reference-table{min-width:690px}
+}
