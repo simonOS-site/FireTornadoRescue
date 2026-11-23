@@ -120,3 +120,39 @@ h1{font-size:clamp(58px,7vw,96px);line-height:1.08;letter-spacing:0}
 .feature p{font-size:14px;line-height:1.8}
 @media(max-width:800px){.section{padding:76px 7%}.inspiration-grid{grid-template-columns:1fr}.inspiration-image{height:clamp(220px,48vw,340px)}}
 @media(max-width:620px){.section{padding:64px 6%}.hero{padding-left:6%;padding-right:6%}h1{font-size:clamp(54px,13vw,76px)}.hero-lede,.intro-text p:not(.large-copy),.inspiration-heading p,.cap-heading p,.mission-copy>p{font-size:15px}.inspiration-grid{gap:20px;margin-top:30px}.inspiration-copy{padding:22px}.inspiration-copy h3{font-size:22px}}
+
+
+/* Final layout corrections: viewport-pinned navigation, readable word spacing,
+   and a more restrained homepage vehicle render. */
+html,body,#root{min-height:100%;overflow:visible!important}
+body{word-spacing:.045em}
+.hero-lede,.intro-text p,.inspiration-copy p,.feature p,.mission-copy>p,
+.scenario-empty p,.scenario-detail p{word-spacing:.075em}
+.site-nav{
+  position:fixed!important;
+  inset:0 0 auto 0!important;
+  width:100%!important;
+  height:72px!important;
+  min-height:72px!important;
+  z-index:99999!important;
+  transform:none!important;
+  margin:0!important;
+  box-shadow:0 3px 14px #0002;
+}
+main{padding-top:72px!important}
+.tempest-render{
+  width:68%!important;
+  max-width:450px!important;
+  height:clamp(150px,21vw,260px)!important;
+  object-fit:contain!important;
+}
+.vehicle-display{aspect-ratio:1.45/1!important}
+@media(max-width:700px){
+  .site-nav{height:64px!important;min-height:64px!important;padding:0 4%!important}
+  main{padding-top:64px!important}
+  .site-nav .brand{font-size:10px!important}
+  .site-nav nav{gap:clamp(10px,3vw,18px)!important;overflow-x:auto!important}
+  .site-nav .nav-link{font-size:8px!important;padding:23px 0!important}
+  .tempest-render{width:78%!important;max-width:360px!important;height:170px!important}
+  .vehicle-display{aspect-ratio:auto!important;min-height:230px}
+}
