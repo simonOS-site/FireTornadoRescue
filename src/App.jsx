@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
+const dispatchObjectives = [
+  {title:'COMMUNITY CHECK-IN',zone:'Ridge Community',brief:'A group of residents needs a welfare check and an update from the response team.',required:1,points:25},
+  {title:'RESTORE TEAM COORDINATION',zone:'Coordination Point',brief:'The response desk needs units at the coordination point to share the latest situation update.',required:2,points:25},
+  {title:'SUPPLY DROP',zone:'Supply Hub',brief:'A supply request has arrived. Assign a Tempest to the supply hub to complete the objective.',required:1,points:25},
+  {title:'SECTOR SUPPORT',zone:'Ember Sector',brief:'The final objective is to provide support at Ember Sector and complete the fictional incident.',required:2,points:25}
+];
+
 const features = [
   { number: '01', title: 'Reinforced body', text: 'A reinforced body concept intended to protect the vehicle in extreme fire and tornado conditions.' },
   { number: '02', title: 'Fire response equipment', text: 'A high-pressure water jet concept designed around a target force of more than 50 kg.' },
@@ -22,6 +29,10 @@ function App() {
     {id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}
   ]);
   const [dispatchRound, setDispatchRound] = useState(0);
+  const [objectiveIndex, setObjectiveIndex] = useState(0);
+  const [incidentComplete, setIncidentComplete] = useState(false);
+  const [lastOutcome, setLastOutcome] = useState('No objectives completed yet.');
+  const currentObjective = dispatchObjectives[objectiveIndex];
   const [rescueScore, setRescueScore] = useState(0);
   const [dispatchLog, setDispatchLog] = useState(['19:42 · Incident FT-204 created. Three Tempest units available.']);
   const [dispatchEvent, setDispatchEvent] = useState('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
@@ -45,23 +56,39 @@ function App() {
     return ()=>clearTimeout(timer);
   },[units]);
   const runDispatchRound = () => {
-    const assigned=units.filter(unit=>unit.zone!=='Base');
-    if (assigned.length===0) {setDispatchEvent('No units have been assigned yet. Select a Tempest and give it a task first.');return;}
-    const score=assigned.length*12 + new Set(assigned.map(u=>u.zone)).size*6;
-    setRescueScore(value=>Math.min(100,value+score));
+    if (incidentComplete || !currentObjective) return;
+    const onObjective=units.filter(unit=>unit.zone===currentObjective.zone && unit.status!=='EN ROUTE');
+    const success=onObjective.length>=currentObjective.required;
+    const outcome=success
+      ? `OBJECTIVE COMPLETE · ${currentObjective.title}. ${onObjective.length} unit(s) at ${currentObjective.zone}. +${currentObjective.points} support points.`
+      : `OBJECTIVE MISSED · ${currentObjective.title}. Needed ${currentObjective.required} unit(s) at ${currentObjective.zone}, but only ${onObjective.length} were ready.`;
+    if(success) setRescueScore(value=>Math.min(100,value+currentObjective.points));
+    setLastOutcome(success?'OBJECTIVE COMPLETE':'OBJECTIVE MISSED');
     setDispatchRound(value=>value+1);
-    setUnits(current=>current.map(unit=>unit.zone==='Base'?unit:{...unit,status:'SUPPORTING'}));
-    const messages=[
-      'New community status update received. Review your unit assignments before the next round.',
-      'The fictional incident area has changed. Reassign units if you want to cover a different support task.',
-      'The response desk reports improved coordination. Continue managing your available units.',
-      'The scenario is stabilising. Check that all three units have useful assignments.'
-    ];
-    setDispatchEvent(messages[dispatchRound%messages.length]);
-    setDispatchLog(current=>[`19:${String(50+dispatchRound).padStart(2,'0')} · Response round ${dispatchRound+1} completed. ${assigned.length} units supporting.`,...current].slice(0,7));
+    setUnits(current=>current.map(unit=>unit.status==='EN ROUTE'?unit:{...unit,status:unit.zone==='Base'?'READY':'SUPPORTING'}));
+    setDispatchLog(current=>[outcome,...current].slice(0,7));
+    if(objectiveIndex+1>=dispatchObjectives.length){
+      setIncidentComplete(true);
+      setDispatchEvent(success
+        ? 'All scenario objectives have been reviewed. The North Ridge exercise is complete.'
+        : 'The exercise has reached its final review. Some objectives were missed. Reset to try a different command plan.');
+    } else {
+      const next=dispatchObjectives[objectiveIndex+1];
+      setObjectiveIndex(value=>value+1);
+      setDispatchEvent(success
+        ? `Update: ${currentObjective.title} completed. New priority received: ${next.title} at ${next.zone}.`
+        : `Update: ${currentObjective.title} was not completed. A new priority has arrived: ${next.title} at ${next.zone}.`);
+    }
+  };
+  const returnSelectedUnit = () => {
+    if(!dispatchStarted) return;
+    setUnits(current=>current.map(unit=>unit.id===selectedUnit?{...unit,zone:'Base',status:'RETURNING'}:unit));
+    setDispatchEvent(`${selectedUnit} has been ordered to return to FTRA Base.`);
+    setDispatchLog(current=>[`COMMAND · ${selectedUnit} ordered back to base.`,...current].slice(0,7));
+    setTimeout(()=>setUnits(current=>current.map(unit=>unit.id===selectedUnit && unit.status==='RETURNING'?{...unit,status:'READY'}:unit)),2200);
   };
   const resetDispatch = () => {
-    setDispatchStarted(false);setSelectedUnit('T-01');setDispatchRound(0);setRescueScore(0);
+    setDispatchStarted(false);setSelectedUnit('T-01');setDispatchRound(0);setObjectiveIndex(0);setIncidentComplete(false);setLastOutcome('No objectives completed yet.');setRescueScore(0);
     setUnits([{id:'T-01',name:'TEMPEST 01',zone:'Base',status:'STANDBY'},{id:'T-02',name:'TEMPEST 02',zone:'Base',status:'STANDBY'},{id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}]);
     setDispatchEvent('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
     setDispatchLog(['19:42 · Incident FT-204 created. Three Tempest units available.']);
@@ -218,22 +245,29 @@ function App() {
               <div className="dispatch-selected"><span>COMMANDING</span><b>{units.find(u=>u.id===selectedUnit)?.name}</b><small>{dispatchStarted?'Choose a zone on the map to dispatch.':'Start the simulation to issue orders.'}</small></div>
             </aside>
             <div className="dispatch-main">
+              <div className="active-objective">
+                <div className="objective-topline"><span>ACTIVE OBJECTIVE {Math.min(objectiveIndex+1,dispatchObjectives.length)} / {dispatchObjectives.length}</span><b>{incidentComplete?'EXERCISE COMPLETE':currentObjective?.zone.toUpperCase()}</b></div>
+                <h3>{incidentComplete?'NORTH RIDGE EXERCISE FINISHED':currentObjective?.title}</h3>
+                <p>{incidentComplete?'All four objectives have been reviewed. Your final support score is shown above.':currentObjective?.brief}</p>
+                <div className="objective-requirement">{incidentComplete?'FINAL SCORE':`REQUIRES ${currentObjective?.required} UNIT(S) AT DESTINATION`} <strong>{incidentComplete?`${rescueScore}%`:`+${currentObjective?.points} POINTS`}</strong></div>
+              </div>
               <div className="dispatch-map">
                 <div className="dispatch-map-grid"/><div className="dispatch-road road-a"/><div className="dispatch-road road-b"/><div className="dispatch-road road-c"/>
                 <div className="dispatch-map-title">NORTH RIDGE / LIVE UNIT TRACKING</div>
                 <div className="dispatch-map-help">SELECT A UNIT ON THE LEFT, THEN CLICK A DESTINATION</div>
-                {dispatchZones.map((zone,i)=><button key={zone.id} className={'dispatch-zone zone-'+i} onClick={()=>assignUnit(zone.id)}><b>{zone.name}</b><small>{units.filter(u=>u.zone===zone.id).map(u=>u.id).join(' · ')||'NO UNITS'}</small></button>)}
+                {dispatchZones.map((zone,i)=><button key={zone.id} className={'dispatch-zone zone-'+i+(currentObjective?.zone===zone.id&&!incidentComplete?' objective-target':'')} onClick={()=>assignUnit(zone.id)}><b>{zone.name}</b><small>{units.filter(u=>u.zone===zone.id).map(u=>u.id).join(' · ')||'NO UNITS'}</small></button>)}
                 <div className="dispatch-base">FTRA BASE</div>
                 {units.map((unit,i)=>{const point=unit.zone==='Base'?{x:50,y:54}:zonePositions[unit.zone];return <div key={unit.id} className={'dispatch-pin '+(unit.status==='EN ROUTE'?'moving':'')} style={{left:`${point.x+(i-1)*3}%`,top:`${point.y+(i-1)*3}%`}}><span>{unit.id}</span><small>{unit.status==='EN ROUTE'?'MOVING':unit.status==='SUPPORTING'?'ON TASK':'READY'}</small></div>})}
                 <div className="dispatch-map-foot">SCHEMATIC GAME MAP · NOT FOR NAVIGATION</div>
               </div>
-              <div className="dispatch-event"><span className="ops-label">LIVE DISPATCH UPDATE / ROUND {dispatchRound}</span><p>{dispatchEvent}</p></div>
+              <div className="dispatch-event"><span className="ops-label">LIVE DISPATCH UPDATE / ROUND {dispatchRound} · {lastOutcome}</span><p>{dispatchEvent}</p></div>
               <div className="dispatch-assignment">
                 <div className="dispatch-section-head"><span>01 / GIVE YOUR UNIT AN ORDER</span><small>SELECT A DESTINATION</small></div>
                 <div className="dispatch-zone-list">{dispatchZones.map(zone=><button key={zone.id} onClick={()=>assignUnit(zone.id)} className={units.find(u=>u.id===selectedUnit)?.zone===zone.id?'assigned':''}><b>{zone.name}</b><span>{zone.task}</span><small>{zone.desc}</small><i>ASSIGN ↗</i></button>)}</div>
               </div>
               <div className="dispatch-controls">
-                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['COMMAND · Simulation started. All three Tempests are ready at base.',...current]);}}>START SIMULATION <span>↗</span></button>:<button className="primary-button" onClick={runDispatchRound}>ADVANCE INCIDENT <span>→</span></button>}
+                <button className="dispatch-reset" disabled={!dispatchStarted||incidentComplete} onClick={returnSelectedUnit}>RETURN SELECTED UNIT TO BASE ↩</button>
+                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['COMMAND · Simulation started. All three Tempests are ready at base.',...current]);}}>START SIMULATION <span>↗</span></button>:<button className="primary-button" disabled={incidentComplete} onClick={runDispatchRound}>{incidentComplete?'EXERCISE COMPLETE':'RESOLVE OBJECTIVE & ADVANCE'} <span>→</span></button>}
                 <button className="dispatch-reset" onClick={resetDispatch}>RESET SCENARIO ↻</button>
               </div>
             </div>
