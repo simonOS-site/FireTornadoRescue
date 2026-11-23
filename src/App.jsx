@@ -17,7 +17,7 @@ function App() {
   const [dispatchStarted, setDispatchStarted] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState('T-01');
   const [units, setUnits] = useState([
-    {id:'T-01',name:'TEMPEST 01',zone:'Base',status:'STANDBY'},
+    {id:'T-01',name:'TEMPEST 01',zone:'Base',status:'READY'},
     {id:'T-02',name:'TEMPEST 02',zone:'Base',status:'STANDBY'},
     {id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}
   ]);
@@ -31,11 +31,19 @@ function App() {
     {id:'Supply Hub',name:'SUPPLY HUB',task:'Supply and recovery',desc:'Support resources'},
     {id:'Coordination Point',name:'COORDINATION POINT',task:'Team coordination',desc:'Shared incident updates'}
   ];
+  const zonePositions = {'Ember Sector':{x:22,y:39},'Ridge Community':{x:78,y:39},'Supply Hub':{x:23,y:77},'Coordination Point':{x:78,y:77}};
   const assignUnit = (zone) => {
     if (!dispatchStarted) return;
-    setUnits(current=>current.map(unit=>unit.id===selectedUnit?{...unit,zone,status:'ASSIGNED'}:unit));
-    setDispatchLog(current=>[`19:${String(44+current.length).padStart(2,'0')} · ${selectedUnit} assigned to ${zone}.`,...current].slice(0,7));
+    const unitName = units.find(unit=>unit.id===selectedUnit)?.name || selectedUnit;
+    setUnits(current=>current.map(unit=>unit.id===selectedUnit?{...unit,zone,status:'EN ROUTE'}:unit));
+    setDispatchEvent(`${unitName} is travelling to ${zone}. Its marker will move across the map.`);
+    setDispatchLog(current=>[`COMMAND · ${selectedUnit} dispatched to ${zone}.`,...current].slice(0,7));
   };
+  useEffect(()=>{
+    if(!units.some(unit=>unit.status==='EN ROUTE')) return;
+    const timer=setTimeout(()=>setUnits(current=>current.map(unit=>unit.status==='EN ROUTE'?{...unit,status:'SUPPORTING'}:unit)),2200);
+    return ()=>clearTimeout(timer);
+  },[units]);
   const runDispatchRound = () => {
     const assigned=units.filter(unit=>unit.zone!=='Base');
     if (assigned.length===0) {setDispatchEvent('No units have been assigned yet. Select a Tempest and give it a task first.');return;}
@@ -196,34 +204,36 @@ function App() {
         <div className="dispatch-shell">
           <div className="dispatch-top"><div><span className="ops-dot"/> INCIDENT FT-204 <b>NORTH RIDGE</b></div><span>COMMAND DESK / TRAINING MODE</span></div>
           <div className="dispatch-summary">
-            <div><span>RESPONSE ROUND</span><b>{dispatchRound}</b></div>
-            <div><span>UNITS DEPLOYED</span><b>{units.filter(u=>u.zone!=='Base').length} / 3</b></div>
-            <div><span>COMMUNITY SUPPORT SCORE</span><b>{rescueScore}%</b></div>
+            <div><span>INCIDENT PHASE</span><b>{dispatchStarted?'ACTIVE':'READY'}</b></div>
+            <div><span>UNITS ON TASK</span><b>{units.filter(u=>u.status==='SUPPORTING').length} / 3</b></div>
+            <div><span>RESPONSE ROUND / SUPPORT SCORE</span><b>{dispatchRound} / {rescueScore}%</b></div>
             <div className="dispatch-progress"><i style={{width:rescueScore+'%'}}/></div>
           </div>
           <div className="dispatch-layout">
             <aside className="dispatch-units">
               <div className="dispatch-section-head"><span>YOUR FLEET</span><small>SELECT A UNIT</small></div>
               {units.map(unit=><button key={unit.id} className={'dispatch-unit '+(selectedUnit===unit.id?'selected':'')} onClick={()=>setSelectedUnit(unit.id)}>
-                <span className="unit-icon">▰</span><span className="unit-name"><b>{unit.name}</b><small>{unit.zone==='Base'?'Awaiting assignment':unit.zone}</small></span><i>{unit.status}</i>
+                <span className="unit-icon">▰</span><span className="unit-name"><b>{unit.name}</b><small>{unit.zone==='Base'?'At command base':unit.zone}</small></span><i>{unit.status}</i>
               </button>)}
-              <div className="dispatch-selected"><span>SELECTED UNIT</span><b>{units.find(u=>u.id===selectedUnit)?.name}</b><small>{units.find(u=>u.id===selectedUnit)?.status}</small></div>
+              <div className="dispatch-selected"><span>COMMANDING</span><b>{units.find(u=>u.id===selectedUnit)?.name}</b><small>{dispatchStarted?'Choose a zone on the map to dispatch.':'Start the simulation to issue orders.'}</small></div>
             </aside>
             <div className="dispatch-main">
               <div className="dispatch-map">
-                <div className="dispatch-map-grid"/>
-                <div className="dispatch-map-title">NORTH RIDGE / SIMULATED ZONES</div>
+                <div className="dispatch-map-grid"/><div className="dispatch-road road-a"/><div className="dispatch-road road-b"/><div className="dispatch-road road-c"/>
+                <div className="dispatch-map-title">NORTH RIDGE / LIVE UNIT TRACKING</div>
+                <div className="dispatch-map-help">SELECT A UNIT ON THE LEFT, THEN CLICK A DESTINATION</div>
                 {dispatchZones.map((zone,i)=><button key={zone.id} className={'dispatch-zone zone-'+i} onClick={()=>assignUnit(zone.id)}><b>{zone.name}</b><small>{units.filter(u=>u.zone===zone.id).map(u=>u.id).join(' · ')||'NO UNITS'}</small></button>)}
-                {units.map((unit,i)=>unit.zone!=='Base'&&<div key={unit.id} className={'dispatch-pin pin-'+i}>{unit.id}</div>)}
+                <div className="dispatch-base">FTRA BASE</div>
+                {units.map((unit,i)=>{const point=unit.zone==='Base'?{x:50,y:54}:zonePositions[unit.zone];return <div key={unit.id} className={'dispatch-pin '+(unit.status==='EN ROUTE'?'moving':'')} style={{left:`${point.x+(i-1)*3}%`,top:`${point.y+(i-1)*3}%`}}><span>{unit.id}</span><small>{unit.status==='EN ROUTE'?'MOVING':unit.status==='SUPPORTING'?'ON TASK':'READY'}</small></div>})}
                 <div className="dispatch-map-foot">SCHEMATIC GAME MAP · NOT FOR NAVIGATION</div>
               </div>
-              <div className="dispatch-event"><span className="ops-label">INCIDENT UPDATE / ROUND {dispatchRound}</span><p>{dispatchEvent}</p></div>
+              <div className="dispatch-event"><span className="ops-label">LIVE DISPATCH UPDATE / ROUND {dispatchRound}</span><p>{dispatchEvent}</p></div>
               <div className="dispatch-assignment">
-                <div className="dispatch-section-head"><span>ASSIGN SELECTED TEMPEST</span><small>CHOOSE A SUPPORT TASK</small></div>
+                <div className="dispatch-section-head"><span>01 / GIVE YOUR UNIT AN ORDER</span><small>SELECT A DESTINATION</small></div>
                 <div className="dispatch-zone-list">{dispatchZones.map(zone=><button key={zone.id} onClick={()=>assignUnit(zone.id)} className={units.find(u=>u.id===selectedUnit)?.zone===zone.id?'assigned':''}><b>{zone.name}</b><span>{zone.task}</span><small>{zone.desc}</small><i>ASSIGN ↗</i></button>)}</div>
               </div>
               <div className="dispatch-controls">
-                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['19:43 · Command simulation started.',...current]);}}>START COMMAND SIMULATION <span>↗</span></button>:<button className="primary-button" onClick={runDispatchRound}>RUN RESPONSE ROUND <span>→</span></button>}
+                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['COMMAND · Simulation started. All three Tempests are ready at base.',...current]);}}>START SIMULATION <span>↗</span></button>:<button className="primary-button" onClick={runDispatchRound}>ADVANCE INCIDENT <span>→</span></button>}
                 <button className="dispatch-reset" onClick={resetDispatch}>RESET SCENARIO ↻</button>
               </div>
             </div>
