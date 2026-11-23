@@ -41,13 +41,11 @@ function App() {
 
   return (
     <main>
-      <div className="topline"><span className="live-dot" /> FTR Tempest <span className="topline-right">FIRE &amp; RESCUE / CONCEPT VEHICLE</span></div>
       <header className="site-nav">
         <a className="brand" href="#overview" onClick={() => goTo('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
         <nav aria-label="Main navigation">
           {['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
         </nav>
-        <button className="nav-cta" onClick={() => goTo('vehicle')}>EXPLORE VEHICLE <span>↗</span></button>
       </header>
 
       {active === 'overview' && (
