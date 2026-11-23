@@ -35,6 +35,7 @@ function App() {
   const currentObjective = dispatchObjectives[objectiveIndex];
   const [rescueScore, setRescueScore] = useState(0);
   const [dispatchLog, setDispatchLog] = useState(['19:42 · Incident FT-204 created. Three Tempest units available.']);
+  const [unitReports, setUnitReports] = useState([{id:1,unit:'FTRA CONTROL',time:'19:42',status:'SYSTEM',message:'Incident FT-204 opened. Three Tempest units are available at base.'}]);
   const [dispatchEvent, setDispatchEvent] = useState('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
   const dispatchZones = [
     {id:'Ember Sector',name:'EMBER SECTOR',task:'Fire-response support',desc:'Abstract incident zone'},
@@ -43,6 +44,25 @@ function App() {
     {id:'Coordination Point',name:'COORDINATION POINT',task:'Team coordination',desc:'Shared incident updates'}
   ];
   const zonePositions = {'Ember Sector':{x:22,y:39},'Ridge Community':{x:78,y:39},'Supply Hub':{x:23,y:77},'Coordination Point':{x:78,y:77}};
+  const makeUnitReport = (unit,statusOverride) => {
+    const status=statusOverride||unit.status;
+    const messages = status==='EN ROUTE'
+      ? ['Departed command base. En route to assigned destination.','Movement underway. Destination acknowledged; awaiting arrival.']
+      : status==='SUPPORTING'
+      ? [`Arrived at ${unit.zone}. Unit is in position and ready for its assigned support objective.`,`Status check complete at ${unit.zone}. Team reports operational and awaiting next instruction.`]
+      : status==='RETURNING'
+      ? ['Return to command base acknowledged. Unit is leaving its assigned area.']
+      : ['At command base. Unit is available and awaiting assignment.'];
+    return {id:Date.now()+Math.random(),unit:unit.id,time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),status,message:messages[Math.floor(Math.random()*messages.length)]};
+  };
+  const requestUnitReport = () => {
+    const unit=units.find(item=>item.id===selectedUnit);
+    if(!unit) return;
+    const report=makeUnitReport(unit);
+    setUnitReports(current=>[report,...current].slice(0,12));
+    setDispatchEvent(`${unit.name} status report received: ${report.message}`);
+    setDispatchLog(current=>[`RADIO · ${unit.id} · ${report.status} · Status report received.`,...current].slice(0,7));
+  };
   const assignUnit = (zone) => {
     if (!dispatchStarted) return;
     const unitName = units.find(unit=>unit.id===selectedUnit)?.name || selectedUnit;
@@ -52,7 +72,7 @@ function App() {
   };
   useEffect(()=>{
     if(!units.some(unit=>unit.status==='EN ROUTE')) return;
-    const timer=setTimeout(()=>setUnits(current=>current.map(unit=>unit.status==='EN ROUTE'?{...unit,status:'SUPPORTING'}:unit)),2200);
+    const timer=setTimeout(()=>setUnits(current=>{const arrived=current.filter(unit=>unit.status==='EN ROUTE');arrived.forEach(unit=>{const report=makeUnitReport({...unit,status:'SUPPORTING'},'SUPPORTING');setUnitReports(reports=>[report,...reports].slice(0,12));setDispatchLog(log=>[`RADIO · ${unit.id} · ARRIVED · Check-in received from ${unit.zone}.`,...log].slice(0,7));});return current.map(unit=>unit.status==='EN ROUTE'?{...unit,status:'SUPPORTING'}:unit)}),2200);
     return ()=>clearTimeout(timer);
   },[units]);
   const runDispatchRound = () => {
@@ -92,6 +112,7 @@ function App() {
     setUnits([{id:'T-01',name:'TEMPEST 01',zone:'Base',status:'STANDBY'},{id:'T-02',name:'TEMPEST 02',zone:'Base',status:'STANDBY'},{id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}]);
     setDispatchEvent('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
     setDispatchLog(['19:42 · Incident FT-204 created. Three Tempest units available.']);
+    setUnitReports([{id:1,unit:'FTRA CONTROL',time:'19:42',status:'SYSTEM',message:'Incident FT-204 opened. Three Tempest units are available at base.'}]);
   };
   const [missionChoice, setMissionChoice] = useState('');
   const [opsPanel, setOpsPanel] = useState('overview');
@@ -261,6 +282,11 @@ function App() {
                 <div className="dispatch-map-foot">SCHEMATIC GAME MAP · NOT FOR NAVIGATION</div>
               </div>
               <div className="dispatch-event"><span className="ops-label">LIVE DISPATCH UPDATE / ROUND {dispatchRound} · {lastOutcome}</span><p>{dispatchEvent}</p></div>
+              <section className="unit-radio-panel">
+                <div className="dispatch-section-head"><span>UNIT RADIO / STATUS REPORTS</span><small>{unitReports.length} REPORTS RECEIVED</small></div>
+                <div className="radio-toolbar"><span>REQUEST A CHECK-IN FROM {selectedUnit}</span><button onClick={requestUnitReport} disabled={!dispatchStarted}>REQUEST STATUS REPORT ↗</button></div>
+                <div className="radio-feed">{unitReports.slice(0,5).map(report=><article className="radio-report" key={report.id}><div className="radio-report-meta"><b>{report.unit}</b><span>{report.time} · {report.status}</span></div><p>{report.message}</p></article>)}</div>
+              </section>
               <div className="dispatch-assignment">
                 <div className="dispatch-section-head"><span>01 / GIVE YOUR UNIT AN ORDER</span><small>SELECT A DESTINATION</small></div>
                 <div className="dispatch-zone-list">{dispatchZones.map(zone=><button key={zone.id} onClick={()=>assignUnit(zone.id)} className={units.find(u=>u.id===selectedUnit)?.zone===zone.id?'assigned':''}><b>{zone.name}</b><span>{zone.task}</span><small>{zone.desc}</small><i>ASSIGN ↗</i></button>)}</div>
