@@ -89,3 +89,34 @@ main{padding-top:72px}
   .site-nav .nav-link{font-size:8px!important;padding:27px 0!important}
   .reference-table{min-width:690px}
 }
+
+
+/* More spacious typography and larger page content */
+:root{font-family:Roboto,Arial,sans-serif}
+body{font-size:16px}
+.hero-lede,.intro-text p:not(.large-copy),.inspiration-heading p,.cap-heading p,.mission-copy>p{font-size:16px;line-height:1.85}
+.hero{padding-left:7%;padding-right:7%;gap:5%}
+.hero-copy{max-width:640px}
+h1{font-size:clamp(58px,7vw,96px);line-height:1.08;letter-spacing:0}
+.section{padding:96px 9%;min-height:calc(100vh - 72px)}
+.intro h2,.cap-heading h2,.mission-copy h2,.inspiration-heading h2{font-size:clamp(48px,5.6vw,76px);line-height:1.12;letter-spacing:0}
+.inspiration-heading{margin-top:34px}
+.inspiration-heading p,.cap-heading p{max-width:440px}
+.inspiration-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:46px}
+.inspiration-card{background:#fafafa;border:1px solid #c8c8c8;box-shadow:0 10px 28px #1110}
+.inspiration-image{height:clamp(220px,25vw,330px);background:#d9d9d9}
+.inspiration-image img{width:100%;height:100%;object-fit:cover;padding:0;display:block;transition:transform .35s ease}
+.inspiration-card:hover .inspiration-image img{transform:scale(1.025)}
+.inspiration-copy{padding:28px 30px 30px}
+.inspiration-meta{font-size:10px;letter-spacing:.13em}
+.inspiration-copy h3{font-size:25px;line-height:1.3;margin:13px 0}
+.inspiration-copy p{font-size:15px;line-height:1.8;min-height:0;color:#4c4c4c}
+.inspiration-copy .inspiration-takeaway{padding:16px 18px;margin:18px 0;background:#ededed;border-left:4px solid var(--orange);font-size:14px}
+.inspiration-takeaway b{display:inline-block;color:#d96808;font-size:10px;letter-spacing:.1em;margin-bottom:5px}
+.inspiration-link{font-size:10px;margin-top:4px}
+.inspiration-note{font-size:12px;line-height:1.7;margin-top:28px}
+.reference-table-wrap,.reference-table{display:none}
+.feature h3{font-size:21px}
+.feature p{font-size:14px;line-height:1.8}
+@media(max-width:800px){.section{padding:76px 7%}.inspiration-grid{grid-template-columns:1fr}.inspiration-image{height:clamp(220px,48vw,340px)}}
+@media(max-width:620px){.section{padding:64px 6%}.hero{padding-left:6%;padding-right:6%}h1{font-size:clamp(54px,13vw,76px)}.hero-lede,.intro-text p:not(.large-copy),.inspiration-heading p,.cap-heading p,.mission-copy>p{font-size:15px}.inspiration-grid{gap:20px;margin-top:30px}.inspiration-copy{padding:22px}.inspiration-copy h3{font-size:22px}}
