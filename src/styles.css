@@ -93,7 +93,7 @@ footer .brand > img.brand-logo{width:34px!important;height:34px!important;min-wi
   min-width:46px!important;
   flex:0 0 46px!important;
   object-fit:contain!important;
-  filter:brightness(0) invert(1)!important;
+  filter:none!important;
   opacity:1!important;
 }
 footer .brand-logo{
