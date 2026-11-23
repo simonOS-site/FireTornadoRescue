@@ -78,3 +78,8 @@ main{padding-top:78px}
 /* Official FTR tornado mark in the header and footer. */
 .brand-logo{display:block;width:42px;height:42px;flex:0 0 42px;object-fit:contain;background:transparent;border-radius:0}
 footer .brand-logo{width:34px;height:34px;flex-basis:34px}
+
+
+/* Ensure the transparent FTR mark is visible in both brand links. */
+.brand > img.brand-logo{display:block!important;visibility:visible!important;opacity:1!important;width:42px!important;height:42px!important;min-width:42px!important;flex:0 0 42px!important;object-fit:contain!important;background:transparent!important;border:0!important;}
+footer .brand > img.brand-logo{width:34px!important;height:34px!important;min-width:34px!important;flex-basis:34px!important;}
