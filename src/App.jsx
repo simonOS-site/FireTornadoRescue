@@ -15,6 +15,11 @@ function App() {
   });
   const [missionStep, setMissionStep] = useState(-1);
   const [missionChoice, setMissionChoice] = useState('');
+  const [opsPanel, setOpsPanel] = useState('overview');
+  const [opsChecks, setOpsChecks] = useState([]);
+  const [opsNotice, setOpsNotice] = useState('Operations desk ready. Select a panel or review the incident checklist.');
+  const opsChecklist = ['Vehicle concept status reviewed', 'Team coordination update received', 'Community information logged', 'Incident summary prepared'];
+  const toggleOpsCheck = (item) => setOpsChecks(current => current.includes(item) ? current.filter(x => x !== item) : [...current, item]);
   const missionStages = [
     { label: 'ALERT RECEIVED', title: 'A warning is issued.', detail: 'A severe fire-weather warning is shared with the response team. The concept vehicle is placed on standby.', status: 'RESPONSE STANDBY' },
     { label: 'TEAMS COORDINATED', title: 'The response is organised.', detail: 'Emergency services coordinate their roles and confirm that the area is being managed by the appropriate authorities.', status: 'TEAMS COORDINATED' },
@@ -154,6 +159,17 @@ function App() {
             <div className="ops-main">
               <div className="ops-map">
                 <div className="map-grid" /><div className="map-road road-one" /><div className="map-road road-two" /><div className="map-zone"><span>SECTOR 04</span><b>!</b></div><div className="map-marker marker-one">FTR-01</div><div className="map-marker marker-two">SAFE ZONE</div><div className="map-coordinates">37° 42' S&nbsp;&nbsp; 145° 08' E</div><div className="map-caption">SCHEMATIC AREA VIEW · NOT FOR NAVIGATION</div>
+                <div className="map-status-tag">{opsPanel === 'vehicle' ? 'VEHICLE VIEW' : opsPanel === 'teams' ? 'TEAM BOARD' : opsPanel === 'comms' ? 'COMMS FEED' : 'INCIDENT OVERVIEW'}</div>
+              </div>
+              <div className="ops-console">
+                <div className="ops-tabs">
+                  {['overview','vehicle','teams','comms'].map(tab => <button key={tab} className={opsPanel===tab?'active':''} onClick={()=>setOpsPanel(tab)}>{tab}</button>)}
+                </div>
+                {opsPanel === 'overview' && <div className="ops-console-content"><div><span className="ops-label">INCIDENT CHECKLIST</span><h3>Operations desk tasks</h3><p>Complete the fictional desk checks to build the incident record. These are project-interface interactions, not real emergency procedures.</p></div><div className="ops-checklist">{opsChecklist.map((item,i)=><button key={item} className={opsChecks.includes(item)?'checked':''} onClick={()=>toggleOpsCheck(item)}><span>{opsChecks.includes(item)?'✓':String(i+1).padStart(2,'0')}</span><b>{item}</b><i>{opsChecks.includes(item)?'LOGGED':'MARK COMPLETE'}</i></button>)}</div><div className="ops-progress-line"><span>{opsChecks.length} / {opsChecklist.length} logged</span><div><i style={{width:(opsChecks.length/opsChecklist.length*100)+'%'}} /></div></div></div>}
+                {opsPanel === 'vehicle' && <div className="ops-console-content"><span className="ops-label">FTR TEMPEST · UNIT 01</span><h3>Vehicle concept monitor</h3><p>Explore the fictional vehicle status board. The values below are illustrative design-screen indicators, not tested specifications.</p><div className="ops-metric-grid"><div><b>READY</b><span>Concept status</span></div><div><b>ONLINE</b><span>Display systems</span></div><div><b>STANDBY</b><span>Mission state</span></div></div><button className="ops-tool-button" onClick={()=>setOpsNotice('FTR Tempest concept report opened. All displayed indicators are fictional.')}>OPEN VEHICLE REPORT ↗</button></div>}
+                {opsPanel === 'teams' && <div className="ops-console-content"><span className="ops-label">COORDINATION BOARD</span><h3>Response team overview</h3><p>Review the fictional teams represented in this scenario.</p><div className="ops-team-list"><div><b>FTRA CONCEPT UNIT</b><span className="team-ready">AVAILABLE</span></div><div><b>COMMUNITY LIAISON</b><span className="team-active">UPDATING</span></div><div><b>REGIONAL COORDINATION</b><span className="team-ready">CONNECTED</span></div></div><button className="ops-tool-button" onClick={()=>setOpsNotice('Team board refreshed. Three fictional team entries are now displayed.')}>REFRESH TEAM BOARD ↻</button></div>}
+                {opsPanel === 'comms' && <div className="ops-console-content"><span className="ops-label">INCOMING COMMUNICATIONS</span><h3>Message centre</h3><div className="ops-message"><time>19:48 · REGIONAL DESK</time><p>“Status updates are being consolidated for the North Ridge scenario.”</p></div><div className="ops-message"><time>19:53 · COMMUNITY LIAISON</time><p>“Public information notice has been recorded in the scenario log.”</p></div><button className="ops-tool-button" onClick={()=>setOpsNotice('Message centre checked. No new fictional messages.')}>CHECK FOR UPDATES ↻</button></div>}
+                <div className="ops-notice"><span className="ops-dot" />{opsNotice}</div>
               </div>
               <div className="ops-briefing">
                 <div className="ops-briefing-copy"><span className="ops-label">{missionStep < 0 ? 'INCOMING ALERT · 19:42' : missionStep === 0 ? 'SITUATION REVIEW · 19:46' : missionStep === 1 ? 'COORDINATION UPDATE · 19:51' : 'MISSION REPORT · 20:08'}</span>
