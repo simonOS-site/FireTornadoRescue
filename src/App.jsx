@@ -267,7 +267,7 @@ function App() {
               </div>
               <div className="dispatch-controls">
                 <button className="dispatch-reset" disabled={!dispatchStarted||incidentComplete} onClick={returnSelectedUnit}>RETURN SELECTED UNIT TO BASE ↩</button>
-                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['COMMAND · Simulation started. All three Tempests are ready at base.',...current]);}}>START SIMULATION <span>↗</span></button>:<button className="primary-button" disabled={incidentComplete} onClick={runDispatchRound}>{incidentComplete?'EXERCISE COMPLETE':'RESOLVE OBJECTIVE & ADVANCE'} <span>→</span></button>}
+                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['COMMAND · Simulation started. All three Tempests are ready at base.',...current]);}}>START SIMULATION <span>↗</span></button>:<button className="primary-button" disabled={incidentComplete||units.some(unit=>unit.status==='EN ROUTE'||unit.status==='RETURNING')} onClick={runDispatchRound}>{incidentComplete?'EXERCISE COMPLETE':units.some(unit=>unit.status==='EN ROUTE'||unit.status==='RETURNING')?'WAIT FOR UNITS TO ARRIVE':'RESOLVE OBJECTIVE & ADVANCE'} <span>→</span></button>}
                 <button className="dispatch-reset" onClick={resetDispatch}>RESET SCENARIO ↻</button>
               </div>
             </div>
