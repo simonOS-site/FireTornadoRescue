@@ -73,3 +73,8 @@ main{padding-top:78px}
   .vehicle-image-caption{font-size:8px}
   .section{padding:68px 7%;scroll-margin-top:112px}
 }
+
+
+/* Official FTR tornado mark in the header and footer. */
+.brand-logo{display:block;width:42px;height:42px;flex:0 0 42px;object-fit:contain;background:#fff;border-radius:2px}
+footer .brand-logo{width:34px;height:34px;flex-basis:34px}
