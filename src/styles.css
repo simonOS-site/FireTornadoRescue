@@ -350,3 +350,19 @@ footer .brand-logo{
  .objective-requirement{align-items:flex-start;flex-direction:column}
  .dispatch-controls .primary-button{margin-left:0}
 }
+
+
+/* Unit radio and status report feed */
+.unit-radio-panel{margin:18px 0;padding:16px;background:#151c19;border:1px solid #35443b}
+.radio-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #ffffff18}
+.radio-toolbar>span{color:#c7d0c8;font-size:9px;font-weight:800;letter-spacing:.7px}
+.radio-toolbar button{padding:9px 12px;background:#e66b3d;color:#fff;border:0;font-size:8px;font-weight:900;letter-spacing:.6px;cursor:pointer}
+.radio-toolbar button:disabled{opacity:.4;cursor:not-allowed}
+.radio-feed{display:grid;gap:0}
+.radio-report{padding:11px 2px;border-bottom:1px solid #ffffff12}
+.radio-report:last-child{border-bottom:0}
+.radio-report-meta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.radio-report-meta b{color:#f09a63;font-size:9px;letter-spacing:.7px}
+.radio-report-meta span{color:#849187;font-size:8px}
+.radio-report p{margin:6px 0 0;color:#c2cbc4;font-size:10px;line-height:1.6}
+@media(max-width:520px){.radio-toolbar{align-items:flex-start;flex-direction:column}.radio-toolbar button{width:100%}}
