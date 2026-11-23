@@ -53,8 +53,8 @@ footer{padding:25px 6%;display:flex;align-items:center;justify-content:space-bet
 @media(max-width:620px){.vehicle-display{aspect-ratio:auto}.tempest-render{height:250px}.vehicle-image-caption{font-size:8px;flex-wrap:wrap}}
 
 
-/* Simplified single-row navigation */
-.site-nav{height:72px;min-height:72px;padding:0 clamp(22px,5vw,76px);display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:32px;top:0;background:#111;color:#f5f5f5;border-bottom:1px solid #343434;}
+/* Persistent top navigation */
+.site-nav{position:sticky;top:0;z-index:1000;height:72px;min-height:72px;padding:0 clamp(22px,5vw,76px);display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:32px;background:#111;color:#f5f5f5;border-bottom:1px solid #343434;}
 .site-nav .brand{color:#f5f5f5;flex:0 0 auto;font-size:15px;}
 .site-nav .brand-mark{background:var(--orange);color:#111;}
 .site-nav nav{display:flex;align-items:center;justify-content:flex-end;gap:clamp(14px,2.4vw,34px);margin-left:auto;}
