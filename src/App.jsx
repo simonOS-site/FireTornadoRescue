@@ -14,6 +14,50 @@ function App() {
     return validPages.includes(requested) ? requested : 'overview';
   });
   const [missionStep, setMissionStep] = useState(-1);
+  const [dispatchStarted, setDispatchStarted] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState('T-01');
+  const [units, setUnits] = useState([
+    {id:'T-01',name:'TEMPEST 01',zone:'Base',status:'STANDBY'},
+    {id:'T-02',name:'TEMPEST 02',zone:'Base',status:'STANDBY'},
+    {id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}
+  ]);
+  const [dispatchRound, setDispatchRound] = useState(0);
+  const [rescueScore, setRescueScore] = useState(0);
+  const [dispatchLog, setDispatchLog] = useState(['19:42 · Incident FT-204 created. Three Tempest units available.']);
+  const [dispatchEvent, setDispatchEvent] = useState('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
+  const dispatchZones = [
+    {id:'Ember Sector',name:'EMBER SECTOR',task:'Fire-response support',desc:'Abstract incident zone'},
+    {id:'Ridge Community',name:'RIDGE COMMUNITY',task:'Community support',desc:'People need assistance'},
+    {id:'Supply Hub',name:'SUPPLY HUB',task:'Supply and recovery',desc:'Support resources'},
+    {id:'Coordination Point',name:'COORDINATION POINT',task:'Team coordination',desc:'Shared incident updates'}
+  ];
+  const assignUnit = (zone) => {
+    if (!dispatchStarted) return;
+    setUnits(current=>current.map(unit=>unit.id===selectedUnit?{...unit,zone,status:'ASSIGNED'}:unit));
+    setDispatchLog(current=>[`19:${String(44+current.length).padStart(2,'0')} · ${selectedUnit} assigned to ${zone}.`,...current].slice(0,7));
+  };
+  const runDispatchRound = () => {
+    const assigned=units.filter(unit=>unit.zone!=='Base');
+    if (assigned.length===0) {setDispatchEvent('No units have been assigned yet. Select a Tempest and give it a task first.');return;}
+    const score=assigned.length*12 + new Set(assigned.map(u=>u.zone)).size*6;
+    setRescueScore(value=>Math.min(100,value+score));
+    setDispatchRound(value=>value+1);
+    setUnits(current=>current.map(unit=>unit.zone==='Base'?unit:{...unit,status:'SUPPORTING'}));
+    const messages=[
+      'New community status update received. Review your unit assignments before the next round.',
+      'The fictional incident area has changed. Reassign units if you want to cover a different support task.',
+      'The response desk reports improved coordination. Continue managing your available units.',
+      'The scenario is stabilising. Check that all three units have useful assignments.'
+    ];
+    setDispatchEvent(messages[dispatchRound%messages.length]);
+    setDispatchLog(current=>[`19:${String(50+dispatchRound).padStart(2,'0')} · Response round ${dispatchRound+1} completed. ${assigned.length} units supporting.`,...current].slice(0,7));
+  };
+  const resetDispatch = () => {
+    setDispatchStarted(false);setSelectedUnit('T-01');setDispatchRound(0);setRescueScore(0);
+    setUnits([{id:'T-01',name:'TEMPEST 01',zone:'Base',status:'STANDBY'},{id:'T-02',name:'TEMPEST 02',zone:'Base',status:'STANDBY'},{id:'T-03',name:'TEMPEST 03',zone:'Base',status:'STANDBY'}]);
+    setDispatchEvent('A fictional fire-weather incident has been reported across North Ridge. Assign your three Tempests to support the response.');
+    setDispatchLog(['19:42 · Incident FT-204 created. Three Tempest units available.']);
+  };
   const [missionChoice, setMissionChoice] = useState('');
   const [opsPanel, setOpsPanel] = useState('overview');
   const [opsChecks, setOpsChecks] = useState([]);
@@ -146,47 +190,49 @@ function App() {
       <section className="mission section" id="mission">
         <div className="section-kicker">03 / FTRA OPERATIONS</div>
         <div className="ops-heading">
-          <div><div className="eyebrow"><span /> FICTIONAL TRAINING SCENARIO</div><h2>FTRA <em>OPERATIONS.</em></h2></div>
-          <div className="ops-live"><i /> SIMULATION ENVIRONMENT <b>OFFLINE / SAFE MODE</b></div>
+          <div><div className="eyebrow"><span /> FICTIONAL COMMAND SIMULATOR</div><h2>FTRA <em>DISPATCH.</em></h2></div>
+          <div className="ops-live"><i /> SIMULATION ONLY <b>NOT A LIVE SERVICE</b></div>
         </div>
-        <div className="ops-dashboard">
-          <div className="ops-topbar"><div><span className="ops-dot" /> INCIDENT CONTROL <b>FT-204</b></div><span>SIMULATED DATA · NOT A LIVE SERVICE</span></div>
-          <div className="ops-grid">
-            <aside className="ops-sidebar">
-              <div className="ops-card incident-card"><span className="ops-label">INCIDENT STATUS</span><strong className={missionStep < 0 ? 'status-standby' : missionStep >= 3 ? 'status-closed' : 'status-active'}>{missionStep < 0 ? 'STANDBY' : missionStep >= 3 ? 'RESOLVED' : 'ACTIVE'}</strong><div className="ops-rule" /><span className="ops-label">LOCATION</span><b>North Ridge · Sector 04</b><span className="ops-label">CONDITIONS</span><b className="condition">Severe fire weather</b><span className="ops-label">UNIT</span><b>FTR TEMPEST · 01</b></div>
-              <div className="ops-card timeline-card"><span className="ops-label">RESPONSE TIMELINE</span>{['Alert received','Situation review','Team coordination','Scenario complete'].map((label,i)=><div className={'ops-timeline-row '+(missionStep>=i?'done':'')} key={label}><span>{String(i+1).padStart(2,'0')}</span><b>{label}</b><i /></div>)}</div>
+        <div className="dispatch-shell">
+          <div className="dispatch-top"><div><span className="ops-dot"/> INCIDENT FT-204 <b>NORTH RIDGE</b></div><span>COMMAND DESK / TRAINING MODE</span></div>
+          <div className="dispatch-summary">
+            <div><span>RESPONSE ROUND</span><b>{dispatchRound}</b></div>
+            <div><span>UNITS DEPLOYED</span><b>{units.filter(u=>u.zone!=='Base').length} / 3</b></div>
+            <div><span>COMMUNITY SUPPORT SCORE</span><b>{rescueScore}%</b></div>
+            <div className="dispatch-progress"><i style={{width:rescueScore+'%'}}/></div>
+          </div>
+          <div className="dispatch-layout">
+            <aside className="dispatch-units">
+              <div className="dispatch-section-head"><span>YOUR FLEET</span><small>SELECT A UNIT</small></div>
+              {units.map(unit=><button key={unit.id} className={'dispatch-unit '+(selectedUnit===unit.id?'selected':'')} onClick={()=>setSelectedUnit(unit.id)}>
+                <span className="unit-icon">▰</span><span className="unit-name"><b>{unit.name}</b><small>{unit.zone==='Base'?'Awaiting assignment':unit.zone}</small></span><i>{unit.status}</i>
+              </button>)}
+              <div className="dispatch-selected"><span>SELECTED UNIT</span><b>{units.find(u=>u.id===selectedUnit)?.name}</b><small>{units.find(u=>u.id===selectedUnit)?.status}</small></div>
             </aside>
-            <div className="ops-main">
-              <div className="ops-map">
-                <div className="map-grid" /><div className="map-road road-one" /><div className="map-road road-two" /><div className="map-zone"><span>SECTOR 04</span><b>!</b></div><div className="map-marker marker-one">FTR-01</div><div className="map-marker marker-two">SAFE ZONE</div><div className="map-coordinates">37° 42' S&nbsp;&nbsp; 145° 08' E</div><div className="map-caption">SCHEMATIC AREA VIEW · NOT FOR NAVIGATION</div>
-                <div className="map-status-tag">{opsPanel === 'vehicle' ? 'VEHICLE VIEW' : opsPanel === 'teams' ? 'TEAM BOARD' : opsPanel === 'comms' ? 'COMMS FEED' : 'INCIDENT OVERVIEW'}</div>
+            <div className="dispatch-main">
+              <div className="dispatch-map">
+                <div className="dispatch-map-grid"/>
+                <div className="dispatch-map-title">NORTH RIDGE / SIMULATED ZONES</div>
+                {dispatchZones.map((zone,i)=><button key={zone.id} className={'dispatch-zone zone-'+i} onClick={()=>assignUnit(zone.id)}><b>{zone.name}</b><small>{units.filter(u=>u.zone===zone.id).map(u=>u.id).join(' · ')||'NO UNITS'}</small></button>)}
+                {units.map((unit,i)=>unit.zone!=='Base'&&<div key={unit.id} className={'dispatch-pin pin-'+i}>{unit.id}</div>)}
+                <div className="dispatch-map-foot">SCHEMATIC GAME MAP · NOT FOR NAVIGATION</div>
               </div>
-              <div className="ops-console">
-                <div className="ops-tabs">
-                  {['overview','vehicle','teams','comms'].map(tab => <button key={tab} className={opsPanel===tab?'active':''} onClick={()=>setOpsPanel(tab)}>{tab}</button>)}
-                </div>
-                {opsPanel === 'overview' && <div className="ops-console-content"><div><span className="ops-label">INCIDENT CHECKLIST</span><h3>Operations desk tasks</h3><p>Complete the fictional desk checks to build the incident record. These are project-interface interactions, not real emergency procedures.</p></div><div className="ops-checklist">{opsChecklist.map((item,i)=><button key={item} className={opsChecks.includes(item)?'checked':''} onClick={()=>toggleOpsCheck(item)}><span>{opsChecks.includes(item)?'✓':String(i+1).padStart(2,'0')}</span><b>{item}</b><i>{opsChecks.includes(item)?'LOGGED':'MARK COMPLETE'}</i></button>)}</div><div className="ops-progress-line"><span>{opsChecks.length} / {opsChecklist.length} logged</span><div><i style={{width:(opsChecks.length/opsChecklist.length*100)+'%'}} /></div></div></div>}
-                {opsPanel === 'vehicle' && <div className="ops-console-content"><span className="ops-label">FTR TEMPEST · UNIT 01</span><h3>Vehicle concept monitor</h3><p>Explore the fictional vehicle status board. The values below are illustrative design-screen indicators, not tested specifications.</p><div className="ops-metric-grid"><div><b>READY</b><span>Concept status</span></div><div><b>ONLINE</b><span>Display systems</span></div><div><b>STANDBY</b><span>Mission state</span></div></div><button className="ops-tool-button" onClick={()=>setOpsNotice('FTR Tempest concept report opened. All displayed indicators are fictional.')}>OPEN VEHICLE REPORT ↗</button></div>}
-                {opsPanel === 'teams' && <div className="ops-console-content"><span className="ops-label">COORDINATION BOARD</span><h3>Response team overview</h3><p>Review the fictional teams represented in this scenario.</p><div className="ops-team-list"><div><b>FTRA CONCEPT UNIT</b><span className="team-ready">AVAILABLE</span></div><div><b>COMMUNITY LIAISON</b><span className="team-active">UPDATING</span></div><div><b>REGIONAL COORDINATION</b><span className="team-ready">CONNECTED</span></div></div><button className="ops-tool-button" onClick={()=>setOpsNotice('Team board refreshed. Three fictional team entries are now displayed.')}>REFRESH TEAM BOARD ↻</button></div>}
-                {opsPanel === 'comms' && <div className="ops-console-content"><span className="ops-label">INCOMING COMMUNICATIONS</span><h3>Message centre</h3><div className="ops-message"><time>19:48 · REGIONAL DESK</time><p>“Status updates are being consolidated for the North Ridge scenario.”</p></div><div className="ops-message"><time>19:53 · COMMUNITY LIAISON</time><p>“Public information notice has been recorded in the scenario log.”</p></div><button className="ops-tool-button" onClick={()=>setOpsNotice('Message centre checked. No new fictional messages.')}>CHECK FOR UPDATES ↻</button></div>}
-                <div className="ops-notice"><span className="ops-dot" />{opsNotice}</div>
+              <div className="dispatch-event"><span className="ops-label">INCIDENT UPDATE / ROUND {dispatchRound}</span><p>{dispatchEvent}</p></div>
+              <div className="dispatch-assignment">
+                <div className="dispatch-section-head"><span>ASSIGN SELECTED TEMPEST</span><small>CHOOSE A SUPPORT TASK</small></div>
+                <div className="dispatch-zone-list">{dispatchZones.map(zone=><button key={zone.id} onClick={()=>assignUnit(zone.id)} className={units.find(u=>u.id===selectedUnit)?.zone===zone.id?'assigned':''}><b>{zone.name}</b><span>{zone.task}</span><small>{zone.desc}</small><i>ASSIGN ↗</i></button>)}</div>
               </div>
-              <div className="ops-briefing">
-                <div className="ops-briefing-copy"><span className="ops-label">{missionStep < 0 ? 'INCOMING ALERT · 19:42' : missionStep === 0 ? 'SITUATION REVIEW · 19:46' : missionStep === 1 ? 'COORDINATION UPDATE · 19:51' : 'MISSION REPORT · 20:08'}</span>
-                  <h3>{missionStep < 0 ? 'A severe fire-weather alert has been received.' : missionStep === 0 ? 'The situation is being assessed.' : missionStep === 1 ? 'Response teams are coordinating.' : 'The scenario is complete.'}</h3>
-                  <p>{missionStep < 0 ? 'A fictional fire tornado warning has been reported near North Ridge. FTRA has been asked to demonstrate how the FTR Tempest concept could support a coordinated response.' : missionStep === 0 ? 'Before the vehicle is assigned a support role, the response team needs to establish shared priorities. Choose the first coordination task.' : missionStep === 1 ? (missionChoice === 'teams' ? 'The response desk has confirmed that agencies are sharing updates and responsibilities. A safe, coordinated response is now being organised.' : 'The response desk has confirmed that community status updates are being shared with the coordinating agencies. A safe, coordinated response is now being organised.') : 'The fictional response has concluded. Teams have checked that people are accounted for, and the FTR Tempest has returned to standby. No real emergency actions are being simulated.'}</p>
-                  {missionStep === 0 && <div className="ops-choices"><button onClick={()=>setMissionChoice('teams')} className={missionChoice==='teams'?'chosen':''}><span>01</span><b>Coordinate response teams</b><small>Share roles and establish a common response picture.</small></button><button onClick={()=>setMissionChoice('community')} className={missionChoice==='community'?'chosen':''}><span>02</span><b>Check community status</b><small>Confirm that public information and welfare updates are being shared.</small></button></div>}
-                  <div className="ops-actions">{missionStep < 0 ? <button className="primary-button" onClick={()=>setMissionStep(0)}>ACKNOWLEDGE ALERT <span>↗</span></button> : missionStep === 0 ? <button className="primary-button" disabled={!missionChoice} onClick={()=>setMissionStep(1)}>CONFIRM PRIORITY <span>→</span></button> : missionStep === 1 ? <button className="primary-button" onClick={()=>setMissionStep(3)}>CLOSE SCENARIO <span>→</span></button> : <button className="primary-button" onClick={()=>{setMissionStep(-1);setMissionChoice('')}}>RESET SIMULATION <span>↻</span></button>}{missionStep >= 0 && missionStep < 3 && <button className="ops-reset" onClick={()=>{setMissionStep(-1);setMissionChoice('')}}>RESET</button>}</div>
-                </div>
-                <div className="ops-log"><span className="ops-label">DISPATCH LOG</span><div><time>19:42</time><p>Alert received from regional monitoring.</p></div>{missionStep>=0&&<div><time>19:46</time><p>FTRA operations desk acknowledged incident.</p></div>}{missionStep>=1&&<div><time>19:51</time><p>{missionChoice==='teams'?'Agency coordination':'Community status'} priority confirmed.</p></div>}{missionStep>=3&&<div><time>20:08</time><p>Scenario closed. Unit returned to standby.</p></div>}</div>
+              <div className="dispatch-controls">
+                {!dispatchStarted?<button className="primary-button" onClick={()=>{setDispatchStarted(true);setDispatchLog(current=>['19:43 · Command simulation started.',...current]);}}>START COMMAND SIMULATION <span>↗</span></button>:<button className="primary-button" onClick={runDispatchRound}>RUN RESPONSE ROUND <span>→</span></button>}
+                <button className="dispatch-reset" onClick={resetDispatch}>RESET SCENARIO ↻</button>
               </div>
             </div>
           </div>
+          <div className="dispatch-log"><div className="dispatch-section-head"><span>COMMAND LOG</span><small>LATEST UPDATES</small></div>{dispatchLog.map((line,i)=><p key={i}>{line}</p>)}</div>
         </div>
-        <p className="disclaimer">Fictional interactive demonstration only. FTRA and the FTR Tempest are student concepts, not real emergency services. The map, times and incident data are fictional.</p>
+        <p className="disclaimer">Fictional strategy-game simulation. The zones, unit behaviour, score and incident are invented for this student concept. This is not a real emergency dispatch or firefighting tool.</p>
       </section>
       )}
-
       <footer><a className="brand" href="#overview"><img className="brand-logo" src="/ftr-logo-white.png" alt="FTR tornado logo" /><span>FIRE TORNADO <b>RESCUE</b></span></a><span>FTRA · STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
     </main>
   );
