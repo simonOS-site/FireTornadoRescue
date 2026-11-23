@@ -42,7 +42,7 @@ function App() {
   return (
     <main>
       <header className="site-nav">
-        <a className="brand" href="#overview" onClick={() => goTo('overview')}><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a>
+        <a className="brand" href="#overview" onClick={() => goTo('overview')}><img className="brand-logo" src="/ftr-logo.svg" alt="FTR tornado logo" /><span>FIRE TORNADO <b>RESCUE</b></span></a>
         <nav aria-label="Main navigation">
           {['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
         </nav>
