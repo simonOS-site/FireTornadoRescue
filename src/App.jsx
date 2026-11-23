@@ -96,22 +96,33 @@ function App() {
           <h2>IDEAS THAT<br /><em>INSPIRED IT.</em></h2>
           <p>Two real vehicles helped shape different parts of the FTR Tempest concept. One focuses on fire response; the other on observing severe weather.</p>
         </div>
-        <div className="reference-table-wrap">
-          <table className="reference-table">
-            <thead><tr><th>VEHICLE</th><th>WHAT IT DOES</th><th>WHAT INSPIRED THE TEMPEST</th></tr></thead>
-            <tbody>
-              <tr>
-                <th scope="row"><span className="reference-number">01</span><strong>Lenco BearCat X3 FireCat</strong><small>ARMOURED FIRE RESPONSE VEHICLE</small><a href="https://www.lencoarmor.com/" target="_blank" rel="noreferrer">LENCO / WEBSITE ↗</a></th>
-                <td>Designed for rapid fire response, with an onboard water system and roof-mounted water nozzle.</td>
-                <td>The idea of combining a protected vehicle with dedicated firefighting equipment.</td>
-              </tr>
-              <tr>
-                <th scope="row"><span className="reference-number">02</span><strong>NOAA NSSL Far-Field Vehicle</strong><small>MOBILE WEATHER RESEARCH VEHICLE</small><a href="https://commons.wikimedia.org/wiki/File:NOAA_NSSL_far_field_vehicle.jpg" target="_blank" rel="noreferrer">PHOTO &amp; DETAILS ↗</a></th>
-                <td>A mobile research vehicle used to measure conditions around storms, including temperature, pressure, humidity and wind.</td>
-                <td>The focus on studying severe weather and designing around challenging storm environments.</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="inspiration-grid">
+          <article className="inspiration-card">
+            <a className="inspiration-image" href="https://www.police1.com/police-products/vehicles/specialty/press-releases/lenco-armor-to-display-all-new-bearcat-x3-firecat-at-2017-shot-show-VHnFg7kFnzDrZ3GN/" target="_blank" rel="noreferrer">
+              <img src="https://assets.bobitstudios.com/image/upload/f_auto%2Cq_auto%2Cdpr_auto/pm.Lenco-X3-Fire-1MM3996a-em_1759875720443_hcwteq.jpg" alt="Lenco BearCat X3 FireCat demonstrating its firefighting water system" loading="lazy" />
+              <span>01 / FIRE RESPONSE</span>
+            </a>
+            <div className="inspiration-copy">
+              <div className="inspiration-meta">ARMOURED FIRE RESPONSE VEHICLE</div>
+              <h3>Lenco BearCat X3 FireCat</h3>
+              <p>A specialised response vehicle with an onboard water system and a roof-mounted water nozzle.</p>
+              <p className="inspiration-takeaway"><b>WHAT INSPIRED THE TEMPEST</b><br />The idea of combining a protected vehicle with dedicated firefighting equipment.</p>
+              <a className="inspiration-link" href="https://www.lencoarmor.com/" target="_blank" rel="noreferrer">LENCO / WEBSITE ↗</a>
+            </div>
+          </article>
+          <article className="inspiration-card">
+            <a className="inspiration-image" href="https://www.nssl.noaa.gov/tools/observation/" target="_blank" rel="noreferrer">
+              <img src="https://www.nssl.noaa.gov/tools/fofs/img/090605_Wyoming6_Coniglio-800.jpg" alt="NOAA National Severe Storms Laboratory field vehicle beneath storm clouds" loading="lazy" />
+              <span>02 / STORM RESEARCH</span>
+            </a>
+            <div className="inspiration-copy">
+              <div className="inspiration-meta">MOBILE WEATHER RESEARCH VEHICLE</div>
+              <h3>NOAA NSSL Field Vehicle</h3>
+              <p>A mobile research vehicle used by storm researchers to observe weather conditions in the field.</p>
+              <p className="inspiration-takeaway"><b>WHAT INSPIRED THE TEMPEST</b><br />The focus on studying severe weather and designing around challenging storm environments.</p>
+              <a className="inspiration-link" href="https://www.nssl.noaa.gov/tools/observation/" target="_blank" rel="noreferrer">NOAA / RESEARCH ↗</a>
+            </div>
+          </article>
         </div>
         <p className="inspiration-note">These vehicles are design references only. The FTR Tempest is an original student concept, not a copy of either vehicle.</p>
       </section>
