@@ -83,3 +83,95 @@ footer .brand-logo{width:34px;height:34px;flex-basis:34px}
 /* Ensure the transparent FTR mark is visible in both brand links. */
 .brand > img.brand-logo{display:block!important;visibility:visible!important;opacity:1!important;width:42px!important;height:42px!important;min-width:42px!important;flex:0 0 42px!important;object-fit:contain!important;background:transparent!important;border:0!important;}
 footer .brand > img.brand-logo{width:34px!important;height:34px!important;min-width:34px!important;flex-basis:34px!important;}
+
+
+/* Header mark: invert the supplied black tornado artwork for the dark header. */
+.brand-logo{
+  display:block!important;
+  width:46px!important;
+  height:46px!important;
+  min-width:46px!important;
+  flex:0 0 46px!important;
+  object-fit:contain!important;
+  filter:brightness(0) invert(1)!important;
+  opacity:1!important;
+}
+footer .brand-logo{
+  width:36px!important;height:36px!important;min-width:36px!important;flex-basis:36px!important;
+}
+
+/* Mission response panel: keep the timeline label and state distinct. */
+.mission-panel{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  column-gap:clamp(36px,6vw,88px);
+  align-items:center;
+}
+.mission-copy{min-width:0}
+.mission-copy h2{line-height:1.02;letter-spacing:-2.5px}
+.mission-copy>p{max-width:430px;line-height:1.85;font-size:14px}
+.mission-status{
+  min-width:0;
+  width:100%;
+  align-items:stretch;
+  justify-content:center;
+  border-left:1px solid #ffffff2b;
+  padding-left:clamp(28px,4vw,56px);
+  gap:18px;
+}
+.scenario-progress{width:100%;min-width:0}
+.scenario-progress-top{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  flex-wrap:nowrap;
+  gap:14px;
+  min-width:0;
+  color:#f3f1eb;
+  font-size:clamp(13px,1.15vw,17px);
+  line-height:1.4;
+  letter-spacing:.25px;
+}
+.scenario-progress-top span{white-space:nowrap}
+.scenario-progress-top b{
+  display:inline-block;
+  flex:0 0 auto;
+  color:var(--orange);
+  font-size:12px;
+  letter-spacing:1.2px;
+}
+.scenario-track{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:7px;
+  margin:18px 0 24px;
+}
+.scenario-track span{
+  display:block;
+  height:4px;
+  background:#46504a;
+}
+.scenario-track span.complete{background:var(--orange)}
+.scenario-empty,.scenario-detail{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.scenario-symbol{display:block;color:var(--orange);font-size:25px;line-height:1}
+.scenario-empty h3,.scenario-detail h3{margin:0;font-size:23px;line-height:1.25}
+.scenario-empty p,.scenario-detail p{
+  max-width:440px;
+  margin:0;
+  color:#c0c5c0;
+  font-size:14px;
+  line-height:1.85;
+}
+.scenario-label{color:var(--orange);font-size:11px;font-weight:800;letter-spacing:1.5px}
+@media(max-width:900px){
+  .mission-panel{column-gap:28px}
+  .mission-status{padding-left:25px}
+}
+@media(max-width:620px){
+  .brand-logo{width:36px!important;height:36px!important;min-width:36px!important;flex-basis:36px!important}
+  .mission-panel{grid-template-columns:1fr;gap:34px}
+  .mission-status{border-left:0;border-top:1px solid #ffffff2b;padding:28px 0 0}
+  .scenario-progress-top{font-size:14px}
+  .scenario-progress-top b{font-size:11px}
+  .scenario-empty h3,.scenario-detail h3{font-size:20px}
+  .scenario-empty p,.scenario-detail p{font-size:13px}
+}
