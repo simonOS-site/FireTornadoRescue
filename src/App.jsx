@@ -94,35 +94,26 @@ function App() {
         <div className="section-kicker">02 / DESIGN INSPIRATION</div>
         <div className="inspiration-heading">
           <h2>IDEAS THAT<br /><em>INSPIRED IT.</em></h2>
-          <p>Firefighting and severe-weather research vehicles helped shape the direction of this concept. These are references, not vehicles built for the same mission.</p>
+          <p>Two real vehicles helped shape different parts of the FTR Tempest concept. One focuses on fire response; the other on observing severe weather.</p>
         </div>
-        <div className="inspiration-grid">
-          <article className="inspiration-card">
-            <div className="inspiration-image">
-              <img src="https://www.lencoarmor.com/wp-content/uploads/2024/01/firecat.png" alt="Lenco FireCat firefighting vehicle" loading="lazy" />
-              <span>FIRE RESPONSE</span>
-            </div>
-            <div className="inspiration-copy">
-              <div className="inspiration-meta">REFERENCE 01 / FIRECAT</div>
-              <h3>Firefighting capability</h3>
-              <p>The FireCat is a firefighting vehicle concept with an onboard water system. It inspired the fire-response side of this project.</p>
-              <span className="inspiration-credit">PHOTO: LENCO ARMORED VEHICLES</span>
-            </div>
-          </article>
-          <article className="inspiration-card">
-            <a href="https://commons.wikimedia.org/wiki/File:NOAA_NSSL_far_field_vehicle.jpg" target="_blank" rel="noreferrer" className="inspiration-image">
-              <img src="https://commons.wikimedia.org/wiki/Special:FilePath/NOAA_NSSL_far_field_vehicle.jpg?width=1200" alt="NOAA NSSL mobile weather research vehicle" loading="lazy" />
-              <span>WEATHER RESEARCH</span>
-            </a>
-            <div className="inspiration-copy">
-              <div className="inspiration-meta">REFERENCE 02 / STORM RESEARCH</div>
-              <h3>Storm-observation vehicles</h3>
-              <p>NOAA research vehicles collect weather observations around storms. This inspired the weather-awareness side of the concept.</p>
-              <a className="inspiration-link" href="https://commons.wikimedia.org/wiki/File:NOAA_NSSL_far_field_vehicle.jpg" target="_blank" rel="noreferrer">VIEW PHOTO &amp; CREDIT <span>↗</span></a>
-            </div>
-          </article>
+        <div className="reference-table-wrap">
+          <table className="reference-table">
+            <thead><tr><th>VEHICLE</th><th>WHAT IT DOES</th><th>WHAT INSPIRED THE TEMPEST</th></tr></thead>
+            <tbody>
+              <tr>
+                <th scope="row"><span className="reference-number">01</span><strong>Lenco BearCat X3 FireCat</strong><small>ARMOURED FIRE RESPONSE VEHICLE</small><a href="https://www.lencoarmor.com/" target="_blank" rel="noreferrer">LENCO / WEBSITE ↗</a></th>
+                <td>Designed for rapid fire response, with an onboard water system and roof-mounted water nozzle.</td>
+                <td>The idea of combining a protected vehicle with dedicated firefighting equipment.</td>
+              </tr>
+              <tr>
+                <th scope="row"><span className="reference-number">02</span><strong>NOAA NSSL Far-Field Vehicle</strong><small>MOBILE WEATHER RESEARCH VEHICLE</small><a href="https://commons.wikimedia.org/wiki/File:NOAA_NSSL_far_field_vehicle.jpg" target="_blank" rel="noreferrer">PHOTO &amp; DETAILS ↗</a></th>
+                <td>A mobile research vehicle used to measure conditions around storms, including temperature, pressure, humidity and wind.</td>
+                <td>The focus on studying severe weather and designing around challenging storm environments.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <p className="inspiration-note">Reference images belong to their respective owners. The FTR Tempest design is an original student concept.</p>
+        <p className="inspiration-note">These vehicles are design references only. The FTR Tempest is an original student concept, not a copy of either vehicle.</p>
       </section>
       )}
 
