@@ -14,6 +14,7 @@ function App() {
     return validPages.includes(requested) ? requested : 'overview';
   });
   const [missionStep, setMissionStep] = useState(-1);
+  const [missionChoice, setMissionChoice] = useState('');
   const missionStages = [
     { label: 'ALERT RECEIVED', title: 'A warning is issued.', detail: 'A severe fire-weather warning is shared with the response team. The concept vehicle is placed on standby.', status: 'RESPONSE STANDBY' },
     { label: 'TEAMS COORDINATED', title: 'The response is organised.', detail: 'Emergency services coordinate their roles and confirm that the area is being managed by the appropriate authorities.', status: 'TEAMS COORDINATED' },
@@ -138,25 +139,35 @@ function App() {
 
       {active === 'mission' && (
       <section className="mission section" id="mission">
-        <div className="section-kicker">03 / THE MISSION</div>
-        <div className="mission-panel">
-          <div className="mission-copy">
-            <div className="eyebrow"><span /> SIMULATED RESPONSE</div>
-            <h2>WHEN THE<br /><em>WARNING</em><br />SOUNDS.</h2>
-            <p>A short, fictional scenario showing how the FTR Tempest concept could fit into a coordinated emergency response.</p>
-            <div className="mission-actions">
-              {missionStep < 0 ? <button className="primary-button" onClick={() => setMissionStep(0)}>BEGIN SIMULATION <span>↗</span></button> : missionStep < missionStages.length - 1 ? <button className="primary-button" onClick={() => setMissionStep((step) => Math.min(step + 1, missionStages.length - 1))}>NEXT STAGE <span>→</span></button> : <button className="primary-button" onClick={() => setMissionStep(-1)}>RUN AGAIN <span>↻</span></button>}
-              {missionStep >= 0 && <button className="text-button" onClick={() => setMissionStep(-1)}>RESET SCENARIO</button>}
-            </div>
-          </div>
-          <div className="mission-status">
-            <div className="scenario-progress"><div className="scenario-progress-top"><span>RESPONSE TIMELINE</span><b>{missionStep < 0 ? 'READY' : String(missionStep + 1).padStart(2, '0') + ' / 04'}</b></div>
-              <div className="scenario-track">{missionStages.map((stage, index) => <span key={stage.label} className={index <= missionStep ? 'complete' : ''} />)}</div>
-              {missionStep < 0 ? <div className="scenario-empty"><span className="scenario-symbol">＋</span><h3>Standing by.</h3><p>Start the simulation to follow the four stages of this fictional response.</p></div> : <div className="scenario-detail"><span className="scenario-label">{currentStage.label}</span><h3>{currentStage.title}</h3><p>{currentStage.detail}</p></div>}
+        <div className="section-kicker">03 / FTRA OPERATIONS</div>
+        <div className="ops-heading">
+          <div><div className="eyebrow"><span /> FICTIONAL TRAINING SCENARIO</div><h2>FTRA <em>OPERATIONS.</em></h2></div>
+          <div className="ops-live"><i /> SIMULATION ENVIRONMENT <b>OFFLINE / SAFE MODE</b></div>
+        </div>
+        <div className="ops-dashboard">
+          <div className="ops-topbar"><div><span className="ops-dot" /> INCIDENT CONTROL <b>FT-204</b></div><span>SIMULATED DATA · NOT A LIVE SERVICE</span></div>
+          <div className="ops-grid">
+            <aside className="ops-sidebar">
+              <div className="ops-card incident-card"><span className="ops-label">INCIDENT STATUS</span><strong className={missionStep < 0 ? 'status-standby' : missionStep >= 3 ? 'status-closed' : 'status-active'}>{missionStep < 0 ? 'STANDBY' : missionStep >= 3 ? 'RESOLVED' : 'ACTIVE'}</strong><div className="ops-rule" /><span className="ops-label">LOCATION</span><b>North Ridge · Sector 04</b><span className="ops-label">CONDITIONS</span><b className="condition">Severe fire weather</b><span className="ops-label">UNIT</span><b>FTR TEMPEST · 01</b></div>
+              <div className="ops-card timeline-card"><span className="ops-label">RESPONSE TIMELINE</span>{['Alert received','Situation review','Team coordination','Scenario complete'].map((label,i)=><div className={'ops-timeline-row '+(missionStep>=i?'done':'')} key={label}><span>{String(i+1).padStart(2,'0')}</span><b>{label}</b><i /></div>)}</div>
+            </aside>
+            <div className="ops-main">
+              <div className="ops-map">
+                <div className="map-grid" /><div className="map-road road-one" /><div className="map-road road-two" /><div className="map-zone"><span>SECTOR 04</span><b>!</b></div><div className="map-marker marker-one">FTR-01</div><div className="map-marker marker-two">SAFE ZONE</div><div className="map-coordinates">37° 42' S&nbsp;&nbsp; 145° 08' E</div><div className="map-caption">SCHEMATIC AREA VIEW · NOT FOR NAVIGATION</div>
+              </div>
+              <div className="ops-briefing">
+                <div className="ops-briefing-copy"><span className="ops-label">{missionStep < 0 ? 'INCOMING ALERT · 19:42' : missionStep === 0 ? 'SITUATION REVIEW · 19:46' : missionStep === 1 ? 'COORDINATION UPDATE · 19:51' : 'MISSION REPORT · 20:08'}</span>
+                  <h3>{missionStep < 0 ? 'A severe fire-weather alert has been received.' : missionStep === 0 ? 'The situation is being assessed.' : missionStep === 1 ? 'Response teams are coordinating.' : 'The scenario is complete.'}</h3>
+                  <p>{missionStep < 0 ? 'A fictional fire tornado warning has been reported near North Ridge. FTRA has been asked to demonstrate how the FTR Tempest concept could support a coordinated response.' : missionStep === 0 ? 'Before the vehicle is assigned a support role, the response team needs to establish shared priorities. Choose the first coordination task.' : missionStep === 1 ? (missionChoice === 'teams' ? 'The response desk has confirmed that agencies are sharing updates and responsibilities. A safe, coordinated response is now being organised.' : 'The response desk has confirmed that community status updates are being shared with the coordinating agencies. A safe, coordinated response is now being organised.') : 'The fictional response has concluded. Teams have checked that people are accounted for, and the FTR Tempest has returned to standby. No real emergency actions are being simulated.'}</p>
+                  {missionStep === 0 && <div className="ops-choices"><button onClick={()=>setMissionChoice('teams')} className={missionChoice==='teams'?'chosen':''}><span>01</span><b>Coordinate response teams</b><small>Share roles and establish a common response picture.</small></button><button onClick={()=>setMissionChoice('community')} className={missionChoice==='community'?'chosen':''}><span>02</span><b>Check community status</b><small>Confirm that public information and welfare updates are being shared.</small></button></div>}
+                  <div className="ops-actions">{missionStep < 0 ? <button className="primary-button" onClick={()=>setMissionStep(0)}>ACKNOWLEDGE ALERT <span>↗</span></button> : missionStep === 0 ? <button className="primary-button" disabled={!missionChoice} onClick={()=>setMissionStep(1)}>CONFIRM PRIORITY <span>→</span></button> : missionStep === 1 ? <button className="primary-button" onClick={()=>setMissionStep(3)}>CLOSE SCENARIO <span>→</span></button> : <button className="primary-button" onClick={()=>{setMissionStep(-1);setMissionChoice('')}}>RESET SIMULATION <span>↻</span></button>}{missionStep >= 0 && missionStep < 3 && <button className="ops-reset" onClick={()=>{setMissionStep(-1);setMissionChoice('')}}>RESET</button>}</div>
+                </div>
+                <div className="ops-log"><span className="ops-label">DISPATCH LOG</span><div><time>19:42</time><p>Alert received from regional monitoring.</p></div>{missionStep>=0&&<div><time>19:46</time><p>FTRA operations desk acknowledged incident.</p></div>}{missionStep>=1&&<div><time>19:51</time><p>{missionChoice==='teams'?'Agency coordination':'Community status'} priority confirmed.</p></div>}{missionStep>=3&&<div><time>20:08</time><p>Scenario closed. Unit returned to standby.</p></div>}</div>
+              </div>
             </div>
           </div>
         </div>
-        <p className="disclaimer">Fictional demonstration only. This student design concept is not a real emergency service or operational guidance.</p>
+        <p className="disclaimer">Fictional interactive demonstration only. FTRA and the FTR Tempest are student concepts, not real emergency services. The map, times and incident data are fictional.</p>
       </section>
       )}
 
