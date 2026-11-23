@@ -160,7 +160,7 @@ function App() {
       </section>
       )}
 
-      <footer><a className="brand" href="#overview"><span className="brand-mark">F</span><span>FIRE TORNADO <b>RESCUE</b></span></a><span>STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
+      <footer><a className="brand" href="#overview"><img className="brand-logo" src="/ftr-logo.svg" alt="FTR tornado logo" /><span>FIRE TORNADO <b>RESCUE</b></span></a><span>STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
     </main>
   );
 }
