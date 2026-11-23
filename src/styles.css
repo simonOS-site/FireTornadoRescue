@@ -300,3 +300,33 @@ footer .brand-logo{
 .dispatch-log p:last-child{border:0}
 @media(max-width:760px){.dispatch-layout{grid-template-columns:1fr}.dispatch-units{border-right:0;border-bottom:1px solid #303936}.dispatch-units{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.dispatch-units .dispatch-section-head,.dispatch-selected{grid-column:1/-1}.dispatch-unit{grid-template-columns:24px 1fr;gap:6px;margin:0;padding:10px 7px}.dispatch-unit>i{grid-column:2}.dispatch-main{padding:12px}.dispatch-map{height:290px}}
 @media(max-width:520px){.dispatch-top{align-items:flex-start;flex-direction:column}.dispatch-summary{grid-template-columns:1fr 1fr}.dispatch-summary>div:nth-child(3){grid-column:1/-1}.dispatch-units{grid-template-columns:1fr}.dispatch-unit{grid-template-columns:30px 1fr auto}.dispatch-unit>i{grid-column:auto}.dispatch-map{height:320px}.dispatch-zone{min-width:108px;padding:9px}.zone-0{left:4%;top:25%}.zone-1{right:4%;top:25%}.zone-2{left:4%;bottom:14%}.zone-3{right:4%;bottom:14%}.dispatch-pin{font-size:7px}.dispatch-zone-list{grid-template-columns:1fr}.dispatch-controls .primary-button{width:100%}}
+
+
+/* Live movement and clearer command flow */
+.dispatch-map{isolation:isolate;background:#1c2a25}
+.dispatch-map-help{position:absolute;right:12px;top:12px;z-index:1;color:#e8b38c;font-size:8px;font-weight:800;letter-spacing:.8px;text-align:right}
+.dispatch-road{position:absolute;z-index:0;height:9px;background:#66766b66;border:1px solid #91a29555;border-radius:12px;transform-origin:center}
+.road-a{width:125%;left:-10%;top:49%;transform:rotate(-18deg)}
+.road-b{width:105%;left:-2%;top:54%;transform:rotate(27deg)}
+.road-c{width:85%;left:12%;top:50%;transform:rotate(90deg)}
+.dispatch-zone{z-index:2;min-height:55px}
+.dispatch-base{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);z-index:1;padding:7px 10px;border:1px solid #9bb5a0;background:#26372c;color:#c7e2cb;font-size:8px;font-weight:900;letter-spacing:1px}
+.dispatch-pin{position:absolute;z-index:5;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 7px;background:#e34e30;color:#fff;border:1px solid #ffd1bd;box-shadow:0 3px 12px #0008;transform:translate(-50%,-50%);transition:left 2.2s cubic-bezier(.22,.75,.25,1),top 2.2s cubic-bezier(.22,.75,.25,1);white-space:nowrap;pointer-events:none}
+.dispatch-pin span{font-size:9px;font-weight:1000;letter-spacing:.5px}
+.dispatch-pin small{font-size:6px;font-weight:900;letter-spacing:.5px;color:#ffe1d4}
+.dispatch-pin.moving{animation:unit-pulse .8s ease-in-out infinite alternate;box-shadow:0 0 0 5px #e34e3030,0 0 18px #e34e30aa}
+@keyframes unit-pulse{from{filter:brightness(1)}to{filter:brightness(1.5)}}
+.dispatch-zone-list button{cursor:pointer;transition:border-color .2s,background .2s,transform .2s}
+.dispatch-zone-list button:hover{transform:translateY(-2px)}
+.dispatch-unit{cursor:pointer;transition:border-color .2s,background .2s}
+.dispatch-unit>i{white-space:nowrap}
+.dispatch-event{min-height:78px}
+.dispatch-event p{font-size:12px}
+.dispatch-controls .primary-button{min-width:220px}
+@media(max-width:520px){
+ .dispatch-map-help{top:31px;left:12px;right:auto;text-align:left;font-size:7px}
+ .dispatch-pin{padding:4px 5px}
+ .dispatch-pin span{font-size:7px}
+ .dispatch-pin small{font-size:5px}
+ .dispatch-zone{min-width:100px}
+}
