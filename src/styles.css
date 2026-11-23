@@ -366,3 +366,17 @@ footer .brand-logo{
 .radio-report-meta span{color:#849187;font-size:8px}
 .radio-report p{margin:6px 0 0;color:#c2cbc4;font-size:10px;line-height:1.6}
 @media(max-width:520px){.radio-toolbar{align-items:flex-start;flex-direction:column}.radio-toolbar button{width:100%}}
+
+
+/* Randomized incoming incident queue */
+.incident-queue{margin:14px 0 18px;padding:15px;background:#151c19;border:1px solid #35443b}
+.incident-queue-list{display:grid;gap:7px}
+.incident-queue-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;padding:10px;background:#202923;border:1px solid #ffffff10}
+.incident-queue-item.current{border-color:#e66b3d;background:#2a251f}
+.incident-queue-item>div{display:grid;gap:4px}
+.incident-queue-item b{font-size:9px;letter-spacing:.6px;color:#f2f3ee}
+.incident-queue-item small{font-size:8px;color:#9ba69d}
+.incident-queue-item strong{font-size:8px;color:#f09a63;white-space:nowrap}
+.incident-queue-item>span{font-size:8px;color:#aab5ac;letter-spacing:.5px}
+.incident-queue-item.current>span{color:#f09a63;font-weight:900}
+@media(max-width:520px){.incident-queue-item{grid-template-columns:1fr auto}.incident-queue-item>span{grid-column:1/-1}}
