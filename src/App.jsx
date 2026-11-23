@@ -63,16 +63,17 @@ function App() {
           <div className="hero-meta"><span>01 / 04</span><span>THE FTR Tempest / VEHICLE CONCEPT</span></div>
         </div>
         <div className="hero-art" aria-label="Fire and smoke atmosphere">
-          <div className="art-grid" />
-          <div className="fire-glow" />
-          <div className="art-label"><span>FIELD CONCEPT</span><b>FTR Tempest</b></div>
-          <div className="vehicle-placeholder model-render">
-            <div className="placeholder-top">FTR Tempest / VEHICLE CONCEPT</div>
-            <img src="/model.svg" alt="FTR Tempest vehicle concept model" />
-            <div className="placeholder-bottom">THE FTR Tempest / ORIGINAL STUDENT CONCEPT</div>
+          <div className="vehicle-display">
+            <div className="vehicle-display-head"><span>FTR / DESIGN STUDY</span><span>01 — 04</span></div>
+            <div className="vehicle-blueprint" aria-hidden="true">
+              <div className="blueprint-cross">+</div>
+              <div className="blueprint-line line-one" />
+              <div className="blueprint-line line-two" />
+              <div className="blueprint-line line-three" />
+              <div className="blueprint-core"><span>FTR</span><b>TEMPEST</b><small>ARMOURED FIRE RESCUE CONCEPT</small></div>
+            </div>
+            <div className="vehicle-display-foot"><span>ORIGINAL STUDENT CONCEPT</span><b>BUILT FOR EXTREME CONDITIONS</b></div>
           </div>
-          <div className="vertical-caption">ENGINEERED FOR RESCUE · DESIGNED FOR EXTREME CONDITIONS</div>
-          <div className="art-index">FTR<span>001</span></div>
         </div>
         <div className="hero-bottom"><span>DESIGN / ENGINEERING / RESCUE</span><span>SCROLL TO EXPLORE ↓</span></div>
       </section>
