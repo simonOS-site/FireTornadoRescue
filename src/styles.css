@@ -257,3 +257,46 @@ footer .brand-logo{
 .ops-notice{display:flex;align-items:center;gap:9px;margin-top:14px;padding:10px 12px;background:#151b18;color:#aeb8af;font-size:9px;line-height:1.5}
 .ops-notice .ops-dot{flex:0 0 6px}
 @media(max-width:620px){.ops-map{height:170px}.ops-checklist{grid-template-columns:1fr}.ops-tabs{overflow-x:auto}.ops-tabs button{padding-left:10px;padding-right:10px}.ops-metric-grid>div{padding:10px}.ops-team-list>div{flex-wrap:wrap}}
+
+
+/* Three-unit FTRA command simulator */
+.dispatch-shell{background:#111615;color:#f1f0e9;border:1px solid #303936;box-shadow:0 18px 55px #10121220}
+.dispatch-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 20px;background:#202725;border-bottom:1px solid #39413d;color:#c3cbc3;font-size:9px;letter-spacing:1.2px}
+.dispatch-top>div{display:flex;align-items:center;gap:10px}.dispatch-top b{color:#f18a45}.dispatch-top>span{color:#89948b;font-size:8px}
+.dispatch-summary{display:grid;grid-template-columns:1fr 1fr 1.5fr;gap:14px;align-items:center;padding:17px 20px;background:#171d1b;border-bottom:1px solid #303936}
+.dispatch-summary>div:not(.dispatch-progress){display:flex;flex-direction:column;gap:6px}.dispatch-summary span{color:#99a49b;font-size:8px;letter-spacing:1px}.dispatch-summary b{font-size:20px;color:#f18a45}
+.dispatch-progress{grid-column:1/-1;height:5px;background:#39443d}.dispatch-progress i{display:block;height:100%;background:#f18a45;transition:width .3s}
+.dispatch-layout{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:610px}
+.dispatch-units{padding:18px;background:#171d1b;border-right:1px solid #303936}
+.dispatch-section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px;color:#e9eee8;font-size:10px;font-weight:900;letter-spacing:1.1px}
+.dispatch-section-head small{font-size:7px;color:#8e9a90;letter-spacing:.8px}
+.dispatch-unit{width:100%;display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:8px;padding:12px 9px;margin-bottom:8px;background:#222b26;border:1px solid #3c4940;color:#f2f1eb;text-align:left}
+.dispatch-unit.selected{border-color:#f18a45;background:#332b23}
+.unit-icon{color:#f18a45;font-size:18px}.unit-name{display:flex;flex-direction:column;gap:5px}.unit-name b{font-size:10px}.unit-name small{font-size:8px;color:#aeb8af}.dispatch-unit>i{font-size:7px;color:#a8c9a8;font-style:normal;letter-spacing:.5px}
+.dispatch-selected{display:flex;flex-direction:column;gap:7px;margin-top:18px;padding:14px;background:#202824;border:1px solid #3b463f}
+.dispatch-selected span{font-size:8px;color:#9da99f;letter-spacing:1px}.dispatch-selected b{font-size:14px;color:#f18a45}.dispatch-selected small{font-size:9px;color:#aeb8af}
+.dispatch-main{padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.dispatch-map{height:270px;position:relative;overflow:hidden;background:#1b2a24;border:1px solid #435149}
+.dispatch-map-grid{position:absolute;inset:0;background-image:linear-gradient(#9db4a018 1px,transparent 1px),linear-gradient(90deg,#9db4a018 1px,transparent 1px);background-size:30px 30px}
+.dispatch-map-title{position:absolute;top:12px;left:14px;color:#aebdb1;font-size:8px;letter-spacing:1.3px}
+.dispatch-zone{position:absolute;display:flex;flex-direction:column;gap:5px;min-width:125px;padding:12px;background:#18221ddd;border:1px solid #607266;color:#f1f0e9;text-align:left;z-index:2}
+.dispatch-zone b{font-size:9px;letter-spacing:.7px}.dispatch-zone small{font-size:8px;color:#f1a16a}
+.zone-0{left:8%;top:27%;border-color:#d66a43}.zone-1{right:8%;top:25%;border-color:#d9b36d}.zone-2{left:12%;bottom:14%;border-color:#779d85}.zone-3{right:10%;bottom:14%;border-color:#8096b0}
+.dispatch-zone:hover{background:#344237;border-color:#f18a45}
+.dispatch-map-foot{position:absolute;bottom:9px;left:12px;color:#89998e;font-size:7px;letter-spacing:1px}
+.dispatch-pin{position:absolute;z-index:3;padding:4px 6px;background:#e34e30;color:#fff;font-size:8px;font-weight:900;border:1px solid #ffd1bd}
+.pin-0{left:44%;top:34%}.pin-1{left:52%;top:50%}.pin-2{left:44%;top:68%}
+.dispatch-event{padding:13px 15px;background:#202824;border-left:3px solid #f18a45}
+.dispatch-event p{margin:7px 0 0;color:#c4ccc5;font-size:11px;line-height:1.7}
+.dispatch-zone-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.dispatch-zone-list button{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:105px;padding:12px 12px 28px;background:#202824;border:1px solid #3d4940;color:#f2f1eb;text-align:left}
+.dispatch-zone-list button b{font-size:10px;letter-spacing:.6px}.dispatch-zone-list button span{font-size:9px;color:#f1a16a}.dispatch-zone-list button small{font-size:8px;color:#9eaaa0}
+.dispatch-zone-list button i{position:absolute;right:11px;bottom:10px;color:#f18a45;font-size:8px;font-style:normal;font-weight:900;letter-spacing:.8px}
+.dispatch-zone-list button:hover,.dispatch-zone-list button.assigned{border-color:#f18a45;background:#302a23}
+.dispatch-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.dispatch-reset{background:none;border:0;color:#aab4aa;font-size:9px;font-weight:900;letter-spacing:1px}
+.dispatch-log{padding:17px 20px;background:#171d1b;border-top:1px solid #303936}
+.dispatch-log p{margin:7px 0;padding:7px 0;border-bottom:1px solid #303936;color:#aeb8af;font-size:9px;line-height:1.5}
+.dispatch-log p:last-child{border:0}
+@media(max-width:760px){.dispatch-layout{grid-template-columns:1fr}.dispatch-units{border-right:0;border-bottom:1px solid #303936}.dispatch-units{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.dispatch-units .dispatch-section-head,.dispatch-selected{grid-column:1/-1}.dispatch-unit{grid-template-columns:24px 1fr;gap:6px;margin:0;padding:10px 7px}.dispatch-unit>i{grid-column:2}.dispatch-main{padding:12px}.dispatch-map{height:290px}}
+@media(max-width:520px){.dispatch-top{align-items:flex-start;flex-direction:column}.dispatch-summary{grid-template-columns:1fr 1fr}.dispatch-summary>div:nth-child(3){grid-column:1/-1}.dispatch-units{grid-template-columns:1fr}.dispatch-unit{grid-template-columns:30px 1fr auto}.dispatch-unit>i{grid-column:auto}.dispatch-map{height:320px}.dispatch-zone{min-width:108px;padding:9px}.zone-0{left:4%;top:25%}.zone-1{right:4%;top:25%}.zone-2{left:4%;bottom:14%}.zone-3{right:4%;bottom:14%}.dispatch-pin{font-size:7px}.dispatch-zone-list{grid-template-columns:1fr}.dispatch-controls .primary-button{width:100%}}
