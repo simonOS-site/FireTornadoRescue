@@ -42,7 +42,7 @@ function App() {
   return (
     <main>
       <header className="site-nav">
-        <a className="brand" href="#overview" onClick={() => goTo('overview')}><img className="brand-logo" src="/ftr-logo-white.png" alt="FTR tornado logo" /><span>FIRE TORNADO <b>RESCUE</b></span></a>
+        <a className="brand" href="#overview" onClick={() => goTo('overview')}><img className="brand-logo" src="/ftr-logo-white.png" alt="Fire Tornado Rescue Authority logo" /><span>FIRE TORNADO <b>RESCUE AUTHORITY</b></span></a>
         <nav aria-label="Main navigation">
           {['overview', 'vehicle', 'inspiration', 'capabilities', 'mission'].map((id) => <button key={id} className={active === id ? 'nav-link selected' : 'nav-link'} onClick={() => goTo(id)}>{id}</button>)}
         </nav>
@@ -160,7 +160,7 @@ function App() {
       </section>
       )}
 
-      <footer><a className="brand" href="#overview"><img className="brand-logo" src="/ftr-logo-white.png" alt="FTR tornado logo" /><span>FIRE TORNADO <b>RESCUE</b></span></a><span>STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
+      <footer><a className="brand" href="#overview"><img className="brand-logo" src="/ftr-logo-white.png" alt="FTR tornado logo" /><span>FIRE TORNADO <b>RESCUE</b></span></a><span>FTRA · STUDENT DESIGN PROJECT · CONCEPT ONLY</span><a href="#overview">BACK TO TOP ↑</a></footer>
     </main>
   );
 }
